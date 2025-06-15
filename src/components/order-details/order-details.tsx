@@ -11,9 +11,9 @@ export const OrderDetails = ({
 	orderId,
 }: TOrderDetailsProps): React.JSX.Element => {
 	return (
-		<div className={`${styles.order_details} mb-20 mt-4 `}>
+		<div className={`${styles['order-details']} mb-20 mt-4 `}>
 			<p
-				className={`${styles.order_details_number} text text_type_digits-large mb-8`}>
+				className={`${styles['order-details__number']} text text_type_digits-large mb-8`}>
 				{orderId}
 			</p>
 			<p className='text text_type_main-medium mb-15'>идентификатор заказа</p>

@@ -1,11 +1,11 @@
-.order_details {
+.order-details {
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
 }
 
-.order_details_number {
+.order-details__number {
 	text-shadow:
 		0 4px 32px #3333ff80,
 		0 0 8px #3333ff40,
