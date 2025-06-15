@@ -1,0 +1,22 @@
+.ingredient-details {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+.ingredient-details__image {
+	width: 480px;
+	height: 240px;
+}
+
+.ingredient-details__bju {
+	display: flex;
+}
+
+.ingredient-details__bju-item {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	width: 112px;
+}
