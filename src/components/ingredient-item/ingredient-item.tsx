@@ -20,7 +20,6 @@ export const IngredientItem = ({
 
 	return (
 		<div
-			role='presentation'
 			className={styles.ingredient_item}
 			onClick={(e) => {
 				e.stopPropagation();

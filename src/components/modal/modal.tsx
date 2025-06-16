@@ -37,12 +37,7 @@ export const Modal = ({
 			<div className={`${styles.modal} p-10`}>
 				<div className={styles.header}>
 					<div className='text text_type_main-large'>{header}</div>
-					<div
-						onKeyDown={() => {}}
-						role='button'
-						tabIndex={0}
-						onClick={onClose}
-						className={styles.close_icon}>
+					<div onClick={onClose} className={styles.close_icon}>
 						<CloseIcon type='primary' />
 					</div>
 				</div>

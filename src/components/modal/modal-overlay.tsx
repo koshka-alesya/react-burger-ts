@@ -11,10 +11,8 @@ export const ModalOverlay = ({
 	onClose,
 }: ModalOverlayProps): React.JSX.Element => {
 	return (
-		<div className={styles.modal_overlay} role='presentation' onClick={onClose}>
-			<div role='presentation' onClick={(e) => e.stopPropagation()}>
-				{children}
-			</div>
+		<div className={styles.modal_overlay} onClick={onClose}>
+			<div onClick={(e) => e.stopPropagation()}>{children}</div>
 		</div>
 	);
 };
