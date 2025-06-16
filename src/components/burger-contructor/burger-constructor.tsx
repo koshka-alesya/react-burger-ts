@@ -15,7 +15,7 @@ type TBurgerConstructorProps = {
 
 export const BurgerConstructor = ({
 	ingredients,
-}: TBurgerConstructorProps): React.JSX.Element | null => {
+}: TBurgerConstructorProps): React.JSX.Element => {
 	const [showOrderDetails, setShowOrderDetails] = useState<boolean>(false);
 
 	return (

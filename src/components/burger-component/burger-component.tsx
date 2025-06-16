@@ -13,7 +13,7 @@ export const BurgerComponent = ({
 	ingredient,
 	type,
 	isLocked,
-}: TBurgerComponentProps): React.JSX.Element | null => {
+}: TBurgerComponentProps): React.JSX.Element => {
 	const text = `${ingredient.name} ${type == 'top' ? '(верх)' : type == 'bottom' ? '(низ)' : ''}`;
 	return (
 		<div className={styles.burger_component}>
