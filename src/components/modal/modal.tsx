@@ -35,14 +35,14 @@ export const Modal = ({
 	return createPortal(
 		<ModalOverlay onClose={onClose}>
 			<div className={`${styles.modal} p-10`}>
-				<div className={styles.modal__header}>
+				<div className={styles.header}>
 					<div className='text text_type_main-large'>{header}</div>
 					<div
 						onKeyDown={() => {}}
 						role='button'
 						tabIndex={0}
 						onClick={onClose}
-						className={styles.modal__close}>
+						className={styles.close_icon}>
 						<CloseIcon type='primary' />
 					</div>
 				</div>

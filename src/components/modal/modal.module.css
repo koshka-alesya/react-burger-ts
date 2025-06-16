@@ -1,4 +1,4 @@
-.modal-overlay {
+.modal_overlay {
 	position: fixed;
 	top: 0;
 	left: 0;
@@ -21,13 +21,13 @@
 	border-radius: 40px;
 }
 
-.modal__header {
+.header {
 	display: flex;
 	align-items: center;
 	height: 64px;
 }
 
-.modal__close {
+.close_icon {
 	margin-left: auto;
 	cursor: pointer;
 }

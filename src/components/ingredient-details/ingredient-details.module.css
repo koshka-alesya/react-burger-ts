@@ -1,20 +1,20 @@
-.ingredient-details {
+.ingredient_details {
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
 }
 
-.ingredient-details__image {
+.image {
 	width: 480px;
 	height: 240px;
 }
 
-.ingredient-details__bju {
+.bju {
 	display: flex;
 }
 
-.ingredient-details__bju-item {
+.bju_item {
 	display: flex;
 	flex-direction: column;
 	align-items: center;

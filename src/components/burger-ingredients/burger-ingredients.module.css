@@ -2,14 +2,32 @@
 	display: flex;
 	flex-direction: column;
 	max-width: 600px;
+	height: 100%;
 	color: var(--text-primary-color);
 	font-family: 'Jet Brains Mono', serif;
 }
 
+.nav {
+	display: flex;
+	flex: 1 1 auto;
+	flex-direction: column;
+	height: 100%;
+}
+
 .menu {
 	display: flex;
+	flex: 0 0 auto;
 	margin: 0;
 	padding: 0;
 	text-align: center;
 	list-style-type: none;
+}
+
+.ingredients {
+	flex: 1 1 auto;
+	margin: 0;
+	padding: 0;
+	overflow-y: auto;
+	list-style-type: none;
+	composes: custom-scroll from global;
 }
