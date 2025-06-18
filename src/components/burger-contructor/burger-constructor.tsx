@@ -1,5 +1,5 @@
 import { TIngredient } from '@utils/types.ts';
-import React, { useState } from 'react';
+import React from 'react';
 import { BurgerComponents } from '../burger-components/burger-components';
 import {
 	Button,
@@ -7,6 +7,7 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Modal } from '../modal/modal';
 import { OrderDetails } from '../order-details/order-details';
+import { useModal } from '@/hooks/useModal';
 import styles from './burger-constructor.module.css';
 
 type TBurgerConstructorProps = {
@@ -16,7 +17,7 @@ type TBurgerConstructorProps = {
 export const BurgerConstructor = ({
 	ingredients,
 }: TBurgerConstructorProps): React.JSX.Element => {
-	const [showOrderDetails, setShowOrderDetails] = useState<boolean>(false);
+	const { isModalOpen, openModal, closeModal } = useModal();
 
 	return (
 		<section className={styles.burger_constructor}>
@@ -32,15 +33,13 @@ export const BurgerConstructor = ({
 					size='large'
 					onClick={(e) => {
 						e.stopPropagation();
-						if (!showOrderDetails) {
-							setShowOrderDetails(true);
-						}
+						openModal();
 					}}>
 					Оформить заказ
 				</Button>
 			</div>
-			{showOrderDetails && (
-				<Modal onClose={() => setShowOrderDetails(false)}>
+			{isModalOpen && (
+				<Modal onClose={closeModal}>
 					<OrderDetails orderId='000000' />
 				</Modal>
 			)}

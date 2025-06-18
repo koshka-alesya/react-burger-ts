@@ -16,7 +16,7 @@ export const OrderDetails = ({
 				{orderId}
 			</p>
 			<p className='text text_type_main-medium mb-15'>идентификатор заказа</p>
-			<img className='mb-15' src={done} alt='done' />
+			<img className='mb-15' src={done} alt='' />
 			<p className='text text_type_main-default mb-2'>
 				Ваш заказ начали готовить
 			</p>

@@ -14,7 +14,7 @@ export const IngredientDetails = ({
 			<img
 				className={`${styles.image} mb-4`}
 				src={ingredient.image_large}
-				alt='ingredient_image'
+				alt={ingredient.name}
 			/>
 			<p className='text text_type_main-medium mb-8'>{ingredient.name}</p>
 			<div className={`${styles.bju} mb-5`}>
