@@ -40,6 +40,8 @@ module.exports = {
 		},
 	},
 	rules: {
+		'jsx-a11y/click-events-have-key-events': 'off',
+		'jsx-a11y/no-static-element-interactions': 'off',
 		'react-refresh/only-export-components': [
 			'warn',
 			{ allowConstantExport: true },

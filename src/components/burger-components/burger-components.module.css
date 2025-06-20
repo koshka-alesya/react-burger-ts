@@ -1,0 +1,42 @@
+.burger_components {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+	height: 100%;
+	margin: 0;
+	padding: 0;
+	list-style-type: none;
+}
+
+.list {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+	height: 100%;
+	margin: 0;
+	padding: 0;
+	list-style-type: none;
+}
+
+.filling {
+	flex: 1;
+	height: 100%;
+	overflow-y: auto;
+	composes: custom-scroll from global;
+}
+
+.item {
+	composes: pr-4 pl-4 from global;
+	display: flex;
+	align-items: center;
+}
+
+.icon {
+	composes: mr-2 from global;
+	width: 24px;
+	height: 24px;
+}
+
+.icon_draggable {
+	cursor: grab;
+}

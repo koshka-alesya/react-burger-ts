@@ -2,6 +2,28 @@
 	display: flex;
 	flex-direction: column;
 	width: 600px;
+	height: 100%;
 	padding-bottom: 20px;
 	color: var(--text-primary-color);
+}
+
+.components {
+	flex: 1;
+	overflow: hidden;
+}
+
+.info {
+	display: flex;
+	flex-shrink: 0;
+	justify-content: flex-end;
+	align-items: center;
+	box-sizing: border-box;
+	width: 100%;
+	composes: pt-10 pb-10 pr-4 pl-4 from global;
+}
+
+.icon {
+	composes: mr-10 from global;
+	width: 36px;
+	height: 36px;
 }
