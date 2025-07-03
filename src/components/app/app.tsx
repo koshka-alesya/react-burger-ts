@@ -1,35 +1,25 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import styles from './app.module.css';
-import { TIngredient } from '@utils/types.ts';
 import { BurgerIngredients } from '@components/burger-ingredients/burger-ingredients.tsx';
 import { BurgerConstructor } from '@components/burger-contructor/burger-constructor.tsx';
 import { AppHeader } from '@components/app-header/app-header.tsx';
-
-const API_INGREDIENTS_URL = 'https://norma.nomoreparties.space/api/ingredients';
+import { useDispatch, useSelector } from 'react-redux';
+import { loadIngredients } from '@/services/ingredients/actions';
+import { AppDispatch } from '@/services/store';
+import { getIngredientsState } from '@/services/ingredients/ingredients-slice';
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
+import Loader from '../loader/loader';
 
 export const App = (): React.JSX.Element | null => {
-	const [ingredients, setIngredients] = useState<TIngredient[] | null>(null);
-	const [hasError, setHasError] = useState<boolean>(false);
+	const { error, loading } = useSelector(getIngredientsState);
+	const dispatch = useDispatch<AppDispatch>();
 
 	useEffect(() => {
-		fetch(API_INGREDIENTS_URL)
-			.then((res) => {
-				if (!res.ok) throw new Error('HTTP Error');
-				return res.json();
-			})
-			.then((data) => {
-				if (data.success) {
-					setIngredients(data.data);
-				} else {
-					setHasError(true);
-				}
-			})
-			.catch(() => {
-				setHasError(true);
-			});
+		dispatch(loadIngredients());
 	}, []);
 
-	if (!ingredients || hasError) {
+	if (error) {
 		return null;
 	}
 
@@ -41,9 +31,12 @@ export const App = (): React.JSX.Element | null => {
 				Соберите бургер
 			</h1>
 			<main className={`${styles.main} pl-5 pr-5`}>
-				<BurgerIngredients ingredients={ingredients} />
-				<BurgerConstructor ingredients={ingredients} />
+				<DndProvider backend={HTML5Backend}>
+					<BurgerIngredients />
+					<BurgerConstructor />
+				</DndProvider>
 			</main>
+			{loading && <Loader />}
 		</div>
 	);
 };

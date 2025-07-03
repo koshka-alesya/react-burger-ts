@@ -1,0 +1,11 @@
+.target {
+	position: relative;
+	box-sizing: border-box;
+	height: 100%;
+}
+
+.highlighted {
+	z-index: 10000;
+	border: 4px dashed var(--colors-interface-accent);
+	border-radius: 20px;
+}

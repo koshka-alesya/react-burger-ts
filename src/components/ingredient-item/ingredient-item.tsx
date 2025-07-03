@@ -4,8 +4,10 @@ import {
 	Counter,
 	CurrencyIcon,
 } from '@ya.praktikum/react-developer-burger-ui-components';
+import { useDrag } from 'react-dnd';
 import styles from './ingredient-item.module.css';
-
+import { useSelector } from 'react-redux';
+import { getIngredientCounts } from '@/services/burger-constructor/burger-constructor-slice';
 type TIngredientProps = {
 	ingredient: TIngredient;
 	onClick: (ingredient: TIngredient) => void;
@@ -15,14 +17,23 @@ export const IngredientItem = ({
 	ingredient,
 	onClick,
 }: TIngredientProps): React.JSX.Element => {
+	const counts = useSelector(getIngredientCounts);
+	const count = counts[ingredient._id];
+
+	const [, dragRef] = useDrag({
+		type: 'ingredient',
+		item: ingredient,
+	});
+
 	return (
 		<div
+			ref={dragRef}
 			className={styles.ingredient_item}
 			onClick={(e) => {
 				e.stopPropagation();
 				onClick(ingredient);
 			}}>
-			<Counter count={1} size='default' extraClass='m-1' />
+			{count && <Counter count={count} size='default' extraClass='m-1' />}
 			<img
 				className='ml-4 mr-4 mb-1'
 				src={ingredient.image}

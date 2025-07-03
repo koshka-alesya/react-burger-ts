@@ -7,12 +7,14 @@ type TBurgerComponentProps = {
 	ingredient: TIngredient;
 	type?: 'top' | 'bottom' | undefined;
 	isLocked?: boolean | undefined;
+	handleClose?: (() => void) | undefined;
 };
 
 export const BurgerComponent = ({
 	ingredient,
 	type,
 	isLocked,
+	handleClose,
 }: TBurgerComponentProps): React.JSX.Element => {
 	const text = `${ingredient.name} ${type == 'top' ? '(верх)' : type == 'bottom' ? '(низ)' : ''}`;
 	return (
@@ -23,6 +25,7 @@ export const BurgerComponent = ({
 				text={text}
 				price={ingredient.price}
 				thumbnail={ingredient.image}
+				handleClose={handleClose}
 			/>
 		</div>
 	);
