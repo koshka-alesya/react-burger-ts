@@ -14,6 +14,7 @@ import { getOrderState } from '@/services/order/order-slice';
 import {
 	getBurgerContructor,
 	getBurgerPrice,
+	resetBurgerConstructor,
 } from '@/services/burger-constructor/burger-constructor-slice';
 import Loader from '../loader/loader';
 import styles from './burger-constructor.module.css';
@@ -39,6 +40,7 @@ export const BurgerConstructor = (): React.JSX.Element => {
 
 			try {
 				await dispatch(createOrder()).unwrap();
+				dispatch(resetBurgerConstructor());
 				openModal();
 			} catch (err) {
 				console.error('Ошибка при создании заказа:', err);

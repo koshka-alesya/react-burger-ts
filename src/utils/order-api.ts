@@ -1,3 +1,5 @@
+import { checkResponse } from './api-helper';
+
 export const orderApiConfig = {
 	baseUrl: 'https://norma.nomoreparties.space/api/orders',
 	headers: {
@@ -11,9 +13,5 @@ export const addOrder = async (ingredientIds: string[]) => {
 		headers: orderApiConfig.headers,
 		body: JSON.stringify({ ingredients: ingredientIds }),
 	});
-	if (!res.ok) {
-		throw new Error(`Ошибка ${res.status}`);
-	}
-
-	return res.json();
+	return checkResponse(res);
 };

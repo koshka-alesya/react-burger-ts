@@ -74,7 +74,7 @@ export const burgerConstructorSlice = createSlice({
 			}
 			state.ingredientCounts = updatedCounts;
 		},
-		resetIngredients(state) {
+		resetBurgerConstructor(state) {
 			state.bun = null;
 			state.ingredients = [];
 		},
@@ -96,6 +96,6 @@ export const {
 	addBun,
 	addIngredient,
 	removeIngredient,
-	resetIngredients,
+	resetBurgerConstructor,
 	moveIngredient,
 } = burgerConstructorSlice.actions;
