@@ -1,51 +1,25 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import styles from './burger-ingredients.module.css';
 import { TIngredient } from '@utils/types.ts';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import { IngredientsGroup } from '../ingredients-group/ingredients-group';
-import { useModal } from '../../hooks/useModal';
-import { Modal } from '../modal/modal';
-import { IngredientDetails } from '../ingredient-details/ingredient-details';
 import {
 	getBuns,
 	getMains,
 	getSauces,
 } from '@/services/ingredients/ingredients-slice';
-import { AppDispatch } from '@/services/store';
-import {
-	clearSelectedIngredient,
-	getSelectedIngredient,
-	setSelectedIngredient,
-} from '@/services/selected-ingredient/selected-ingredient-slice';
 
 export const BurgerIngredients = (): React.JSX.Element => {
 	const [active, setActive] = useState<'bun' | 'sauce' | 'main'>('bun');
-	const { isModalOpen, openModal, closeModal } = useModal();
 	const buns: TIngredient[] = useSelector(getBuns);
 	const mains: TIngredient[] = useSelector(getMains);
 	const sauces: TIngredient[] = useSelector(getSauces);
-	const selectedIngredient: TIngredient | null = useSelector(
-		getSelectedIngredient
-	);
-	const dispatch = useDispatch<AppDispatch>();
+
 	const containerRef = useRef<HTMLUListElement | null>(null);
 	const bunRef = useRef<HTMLLIElement | null>(null);
 	const sauceRef = useRef<HTMLLIElement | null>(null);
 	const mainRef = useRef<HTMLLIElement | null>(null);
-
-	const showIngredient = useCallback(
-		(ingredient: TIngredient) => {
-			dispatch(setSelectedIngredient(ingredient));
-			openModal();
-		},
-		[openModal, dispatch]
-	);
-
-	const closeIngredient = useCallback(() => {
-		dispatch(clearSelectedIngredient());
-		closeModal();
-	}, [closeModal, dispatch]);
 
 	const handleScroll = useCallback(() => {
 		if (
@@ -99,23 +73,18 @@ export const BurgerIngredients = (): React.JSX.Element => {
 				<ul className={styles.ingredients} ref={containerRef}>
 					<li className='mt-10' ref={bunRef}>
 						<p className='text text_type_main-medium mb-6'>Булки</p>
-						<IngredientsGroup ingredients={buns} onClick={showIngredient} />
+						<IngredientsGroup ingredients={buns} />
 					</li>
 					<li className='mt-10' ref={mainRef}>
 						<p className='text text_type_main-medium mb-6 '>Начинки</p>
-						<IngredientsGroup ingredients={mains} onClick={showIngredient} />
+						<IngredientsGroup ingredients={mains} />
 					</li>
 					<li className='mt-10 mb-10' ref={sauceRef}>
 						<p className='text text_type_main-medium mb-6'>Соусы</p>
-						<IngredientsGroup ingredients={sauces} onClick={showIngredient} />
+						<IngredientsGroup ingredients={sauces} />
 					</li>
 				</ul>
 			</nav>
-			{isModalOpen && selectedIngredient && (
-				<Modal onClose={closeIngredient} header={'Детали ингредиента'}>
-					<IngredientDetails ingredient={selectedIngredient} />
-				</Modal>
-			)}
 		</section>
 	);
 };
