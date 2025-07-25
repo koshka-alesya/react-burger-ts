@@ -1,0 +1,30 @@
+.profile {
+	display: flex;
+	justify-content: center;
+	margin-top: 180px;
+	padding: 0 20px;
+}
+
+.nav {
+	flex-shrink: 0;
+	width: 320px;
+	margin-right: 60px;
+}
+
+.item {
+	display: flex;
+	align-items: center;
+	height: 60px;
+	color: var(--text-primary-color);
+	text-decoration: none;
+	cursor: pointer;
+}
+
+.inactive {
+	color: var(--text-inactive-color);
+}
+
+.content {
+	flex-grow: 1;
+	max-width: 844px;
+}
