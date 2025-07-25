@@ -13,8 +13,6 @@ import {
 import { checkResponse } from './api-helper';
 
 const API_BASE_URL = 'https://norma.nomoreparties.space/api';
-// https://norma.nomoreparties.space/api/password-reset.
-// https://norma.nomoreparties.space/api/password-reset/reset.
 
 export const USER_API_ENDPOINTS = {
 	LOGIN: `${API_BASE_URL}/auth/login`,
