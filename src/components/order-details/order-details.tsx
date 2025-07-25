@@ -1,19 +1,20 @@
 import React from 'react';
 import done from '../../images/done.png';
 import styles from './order-details.module.css';
+import { useSelector } from 'react-redux';
+import { getOrderState } from '@/services/order/order-slice';
 
-type TOrderDetailsProps = {
-	orderId: string;
-	status?: string;
-};
+export const OrderDetails = (): React.JSX.Element | null => {
+	const { order } = useSelector(getOrderState);
 
-export const OrderDetails = ({
-	orderId,
-}: TOrderDetailsProps): React.JSX.Element => {
+	if (!order) {
+		return null;
+	}
+
 	return (
 		<div className={`${styles.order_details} mb-20 mt-4 `}>
 			<p className={`${styles.order_id} text text_type_digits-large mb-8`}>
-				{orderId}
+				{order.order.number}
 			</p>
 			<p className='text text_type_main-medium mb-15'>идентификатор заказа</p>
 			<img className='mb-15' src={done} alt='Подтверждение заказа' />
