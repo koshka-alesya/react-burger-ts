@@ -10,29 +10,18 @@ import {
 	ForgotPasswordRequest,
 	ForgotPasswordResponse,
 } from '../types';
-import { checkResponse } from './api-helper';
-
-const API_BASE_URL = 'https://norma.nomoreparties.space/api';
-
-export const USER_API_ENDPOINTS = {
-	LOGIN: `${API_BASE_URL}/auth/login`,
-	REGISTER: `${API_BASE_URL}/auth/register`,
-	LOGOUT: `${API_BASE_URL}/auth/logout`,
-	REFRESH_TOKEN: `${API_BASE_URL}/auth/token`,
-	FORGOT_PASSWORD: `${API_BASE_URL}/password-reset`,
-	RESET_PASSWORD: `${API_BASE_URL}/password-reset/reset`,
-};
+import { request } from './api-helper';
+import { API_ENDPOINTS } from './endpoints';
 
 export const loginUser = async (data: LoginRequest): Promise<LoginResponse> => {
-	const response = await fetch(USER_API_ENDPOINTS.LOGIN, {
-		method: 'POST',
-		headers: {
-			'Content-Type': 'application/json',
+	const result = await request(
+		API_ENDPOINTS.LOGIN,
+		{
+			method: 'POST',
+			body: JSON.stringify(data),
 		},
-		body: JSON.stringify(data),
-	});
-
-	const result: LoginResponse = await checkResponse(response);
+		false
+	);
 
 	localStorage.setItem('accessToken', result.accessToken);
 	localStorage.setItem('refreshToken', result.refreshToken);
@@ -52,15 +41,14 @@ export const logoutUser = async (): Promise<void> => {
 		token: refreshToken,
 	};
 
-	const response = await fetch(USER_API_ENDPOINTS.LOGOUT, {
-		method: 'POST',
-		headers: {
-			'Content-Type': 'application/json',
+	const result = await request(
+		API_ENDPOINTS.LOGOUT,
+		{
+			method: 'POST',
+			body: JSON.stringify(payload),
 		},
-		body: JSON.stringify(payload),
-	});
-
-	const result: LoginResponse = await checkResponse(response);
+		false
+	);
 
 	localStorage.setItem('accessToken', result.accessToken);
 	localStorage.setItem('refreshToken', result.refreshToken);
@@ -69,15 +57,14 @@ export const logoutUser = async (): Promise<void> => {
 export async function registerUser(
 	data: RegisterRequest
 ): Promise<RegisterResponse> {
-	const response = await fetch(USER_API_ENDPOINTS.REGISTER, {
-		method: 'POST',
-		headers: {
-			'Content-Type': 'application/json',
+	const result = await request(
+		API_ENDPOINTS.REGISTER,
+		{
+			method: 'POST',
+			body: JSON.stringify(data),
 		},
-		body: JSON.stringify(data),
-	});
-
-	const result: RegisterResponse = await checkResponse(response);
+		false
+	);
 
 	localStorage.setItem('accessToken', result.accessToken);
 	localStorage.setItem('refreshToken', result.refreshToken);
@@ -92,15 +79,14 @@ export const refreshToken = async (): Promise<RefreshTokenResponse> => {
 		throw new Error('No refreshToken');
 	}
 
-	const response = await fetch(USER_API_ENDPOINTS.REFRESH_TOKEN, {
-		method: 'POST',
-		headers: {
-			'Content-Type': 'application/json',
+	const result = await request(
+		API_ENDPOINTS.REFRESH_TOKEN,
+		{
+			method: 'POST',
+			body: JSON.stringify({ token: refreshToken }),
 		},
-		body: JSON.stringify({ token: refreshToken }),
-	});
-
-	const result: RefreshTokenResponse = await checkResponse(response);
+		false
+	);
 
 	localStorage.setItem('accessToken', result.accessToken);
 	localStorage.setItem('refreshToken', result.refreshToken);
@@ -111,29 +97,25 @@ export const refreshToken = async (): Promise<RefreshTokenResponse> => {
 export const resetPassword = async (
 	data: ResetPasswordRequest
 ): Promise<ResetPasswordResponse> => {
-	const response = await fetch(USER_API_ENDPOINTS.RESET_PASSWORD, {
-		method: 'POST',
-		headers: {
-			'Content-Type': 'application/json',
+	return request(
+		API_ENDPOINTS.RESET_PASSWORD,
+		{
+			method: 'POST',
+			body: JSON.stringify(data),
 		},
-		body: JSON.stringify(data),
-	});
-
-	const result: ResetPasswordResponse = await checkResponse(response);
-	return result;
+		false
+	);
 };
 
 export const forgotPassword = async (
 	data: ForgotPasswordRequest
 ): Promise<ForgotPasswordResponse> => {
-	const response = await fetch(USER_API_ENDPOINTS.FORGOT_PASSWORD, {
-		method: 'POST',
-		headers: {
-			'Content-Type': 'application/json',
+	return request(
+		API_ENDPOINTS.FORGOT_PASSWORD,
+		{
+			method: 'POST',
+			body: JSON.stringify(data),
 		},
-		body: JSON.stringify(data),
-	});
-
-	const result: ForgotPasswordResponse = await checkResponse(response);
-	return result;
+		false
+	);
 };

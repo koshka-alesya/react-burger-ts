@@ -1,8 +1,6 @@
-import { checkResponse } from './api-helper';
-
-const API_INGREDIENTS_URL = 'https://norma.nomoreparties.space/api/ingredients';
+import { request } from './api-helper';
+import { API_ENDPOINTS } from './endpoints';
 
 export const fetchIngredients = async () => {
-	const res = await fetch(API_INGREDIENTS_URL);
-	return checkResponse(res);
+	return request(API_ENDPOINTS.INGREDIENTS, { method: 'GET' }, false);
 };

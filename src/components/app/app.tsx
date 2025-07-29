@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styles from './app.module.css';
 import { AppHeader } from '@/components/app-header/app-header';
 import {
@@ -22,27 +22,43 @@ import { ProfileOrderDetails } from '../profile-order-details/profile-order-deta
 import { Modal } from '../modal/modal';
 import { IngredientDetailsPage } from '@/pages/ingredient-details/ingredient-details';
 import { IngredientDetailsModal } from '../ingredient-details/ingredient-details-modal';
+import { AppDispatch } from '@/services/store';
+import { useDispatch, useSelector } from 'react-redux';
+import { loadIngredients } from '@/services/ingredients/actions';
+import { getIngredientsState } from '@/services/ingredients/ingredients-slice';
+import Loader from '../loader/loader';
 
-export const App = (): React.JSX.Element => {
+export const App = (): React.JSX.Element | null => {
 	const navigate = useNavigate();
 	const location = useLocation();
+	const dispatch = useDispatch<AppDispatch>();
 	const navigationType = useNavigationType();
+	const { error, loading } = useSelector(getIngredientsState);
 	const background = location.state && location.state.background;
 	const isModal = background && navigationType === 'PUSH';
+
+	useEffect(() => {
+		dispatch(loadIngredients());
+	}, []);
 
 	const handleModalClose = () => {
 		navigate(-1);
 	};
+
+	if (error) {
+		return null;
+	}
+
+	if (loading) {
+		return <Loader />;
+	}
 
 	return (
 		<div className={styles.app}>
 			<AppHeader />
 			<main className={styles.main}>
 				<Routes location={isModal ? background : location}>
-					<Route
-						path='/'
-						element={<ProtectedRouteElement component={<HomePage />} />}
-					/>
+					<Route path='/' element={<HomePage />} />
 					<Route
 						path='/login'
 						element={
@@ -84,12 +100,7 @@ export const App = (): React.JSX.Element => {
 						<Route path='orders' element={<OrderHistory />} />
 						<Route path='orders/:number' element={<ProfileOrderDetails />} />
 					</Route>
-					<Route
-						path='/ingredients/:id'
-						element={
-							<ProtectedRouteElement component={<IngredientDetailsPage />} />
-						}
-					/>
+					<Route path='/ingredients/:id' element={<IngredientDetailsPage />} />
 					<Route path='/error' element={<ErrorPage />} />
 					<Route path='*' element={<ErrorPage />} />
 				</Routes>

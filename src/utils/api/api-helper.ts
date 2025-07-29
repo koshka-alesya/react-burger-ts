@@ -1,3 +1,4 @@
+import { BASE_URL } from './endpoints';
 import { refreshToken } from './session-api';
 
 export const checkResponse = async (res: Response) => {
@@ -7,38 +8,40 @@ export const checkResponse = async (res: Response) => {
 	return res.json();
 };
 
-export async function fetchWithAuth(
-	input: RequestInfo,
-	init: RequestInit = {}
+export async function request(
+	endpoint: string,
+	init: RequestInit = {},
+	withAuth: boolean = true
 ) {
-	let accessToken = localStorage.getItem('accessToken');
+	const headers = new Headers(init.headers || {});
 
-	if (!accessToken) {
-		const tokens = await refreshToken();
-		accessToken = tokens.accessToken;
+	if (!headers.has('Content-Type') && init.body) {
+		headers.set('Content-Type', 'application/json');
 	}
 
-	const authHeaders = {
-		...init.headers,
-		Authorization: accessToken || '',
-	};
+	if (withAuth) {
+		let accessToken = localStorage.getItem('accessToken');
+		if (!accessToken) {
+			const tokens = await refreshToken();
+			accessToken = tokens.accessToken;
+		}
+		headers.set('Authorization', accessToken || '');
+	}
 
-	let response = await fetch(input, {
+	let response = await fetch(`${BASE_URL}${endpoint}`, {
 		...init,
-		headers: authHeaders,
+		headers,
 	});
 
-	if (response.status === 401) {
+	if (withAuth && response.status === 401) {
 		const tokens = await refreshToken();
-		const retryHeaders = {
-			...init.headers,
-			Authorization: tokens.accessToken,
-		};
-		response = await fetch(input, {
+		headers.set('Authorization', tokens.accessToken || '');
+
+		response = await fetch(`${BASE_URL}${endpoint}`, {
 			...init,
-			headers: retryHeaders,
+			headers,
 		});
 	}
 
-	return response;
+	return checkResponse(response);
 }

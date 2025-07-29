@@ -1,17 +1,9 @@
-import { checkResponse, fetchWithAuth } from './api-helper';
-
-export const orderApiConfig = {
-	baseUrl: 'https://norma.nomoreparties.space/api/orders',
-	headers: {
-		'Content-Type': 'application/json',
-	},
-};
+import { request } from './api-helper';
+import { API_ENDPOINTS } from './endpoints';
 
 export const addOrder = async (ingredientIds: string[]) => {
-	const res = await fetchWithAuth(orderApiConfig.baseUrl, {
+	return request(API_ENDPOINTS.ORDERS, {
 		method: 'POST',
-		headers: orderApiConfig.headers,
 		body: JSON.stringify({ ingredients: ingredientIds }),
 	});
-	return checkResponse(res);
 };

@@ -7,57 +7,23 @@ import {
 	forgotPassword as forgotPasswordApi,
 } from '../../utils/api/session-api';
 import { getUserInfo, updateUserInfo } from '../../utils/api/user-api';
-import {
-	LoginRequest,
-	RegisterRequest,
-	ResetPasswordRequest,
-	ForgotPasswordRequest,
-	UpdateUserRequest,
-	UserResponse,
-} from '@/utils/types';
 
-export const login = createAsyncThunk(
-	'user/login',
-	async (data: LoginRequest) => {
-		return loginUser(data);
-	}
-);
+export const login = createAsyncThunk('user/login', loginUser);
 
-export const register = createAsyncThunk(
-	'user/register',
-	async (data: RegisterRequest) => {
-		return registerUser(data);
-	}
-);
+export const register = createAsyncThunk('user/register', registerUser);
 
 export const forgotPassword = createAsyncThunk(
 	'user/forgotPassword',
-	async (data: ForgotPasswordRequest) => {
-		return forgotPasswordApi(data);
-	}
+	forgotPasswordApi
 );
 
 export const resetPassword = createAsyncThunk(
 	'user/resetPassword',
-	async (data: ResetPasswordRequest) => {
-		return resetPasswordApi(data);
-	}
+	resetPasswordApi
 );
 
-export const fetchUser = createAsyncThunk<UserResponse>(
-	'user/fetchUser',
-	async () => {
-		return getUserInfo();
-	}
-);
+export const fetchUser = createAsyncThunk('user/fetchUser', getUserInfo);
 
-export const updateUser = createAsyncThunk(
-	'user/updateUser',
-	async (data: UpdateUserRequest) => {
-		return updateUserInfo(data);
-	}
-);
+export const updateUser = createAsyncThunk('user/updateUser', updateUserInfo);
 
-export const logout = createAsyncThunk('user/logout', async () => {
-	await logoutUser();
-});
+export const logout = createAsyncThunk('user/logout', logoutUser);
