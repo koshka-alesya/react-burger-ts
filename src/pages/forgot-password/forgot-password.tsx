@@ -1,4 +1,4 @@
-import React, { FormEvent, useCallback, useState } from 'react';
+import React, { FormEvent, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
 	Button,
@@ -10,16 +10,15 @@ import { forgotPassword } from '@/services/user/action';
 import { AppDispatch } from '@/services/store';
 import { getIsLoading } from '@/services/user/user-slice';
 import Loader from '@/components/loader/loader';
+import { useForm } from '@/hooks/useForm';
 
 export const ForgotPasswordPage = (): React.JSX.Element => {
-	const [email, setEmail] = useState<string>('');
+	const { values, handleChange } = useForm({
+		email: '',
+	});
 	const navigate = useNavigate();
 	const dispatch = useDispatch<AppDispatch>();
 	const loading = useSelector(getIsLoading);
-
-	const onChangeEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
-		setEmail(e.target.value);
-	};
 
 	const handleNavigateToLogin = () => {
 		navigate('/login');
@@ -28,16 +27,16 @@ export const ForgotPasswordPage = (): React.JSX.Element => {
 	const handleForgotPassword = useCallback(
 		async (e: FormEvent<HTMLFormElement>) => {
 			e.preventDefault();
-			if (!email) return;
+			if (!values.email) return;
 			try {
-				await dispatch(forgotPassword({ email })).unwrap();
+				await dispatch(forgotPassword({ email: values.email })).unwrap();
 				sessionStorage.setItem('forgotVisited', 'true');
 				navigate('/reset-password');
 			} catch (error) {
 				console.error('Password reset failed:', error);
 			}
 		},
-		[dispatch, email, navigate]
+		[dispatch, values.email, navigate]
 	);
 
 	return (
@@ -45,8 +44,8 @@ export const ForgotPasswordPage = (): React.JSX.Element => {
 			<p className='text text_type_main-medium mb-6'>Восстановление пароля</p>
 			<form onSubmit={handleForgotPassword}>
 				<EmailInput
-					onChange={onChangeEmail}
-					value={email}
+					onChange={handleChange}
+					value={values.email}
 					name={'email'}
 					isIcon={false}
 					extraClass='mb-6'

@@ -1,4 +1,4 @@
-import React, { FormEvent, useCallback, useState } from 'react';
+import React, { FormEvent, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
 	Button,
@@ -10,21 +10,16 @@ import styles from '../auth/auth.module.css';
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from '@/services/store';
 import { register } from '@/services/user/action';
+import { useForm } from '@/hooks/useForm';
 
 export const RegistrationPage = (): React.JSX.Element => {
-	const [name, setName] = useState('');
-	const [email, setEmail] = useState('');
-	const [password, setPassword] = useState('');
+	const { values, handleChange } = useForm({
+		email: '',
+		name: '',
+		password: '',
+	});
 	const navigate = useNavigate();
 	const dispatch = useDispatch<AppDispatch>();
-
-	const onChangeEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
-		setEmail(e.target.value);
-	};
-
-	const onChangePassword = (e: React.ChangeEvent<HTMLInputElement>) => {
-		setPassword(e.target.value);
-	};
 
 	const handleNavigateToLogin = () => {
 		navigate('/login');
@@ -32,15 +27,24 @@ export const RegistrationPage = (): React.JSX.Element => {
 
 	const handleRegister = useCallback(
 		async (e: FormEvent<HTMLFormElement>) => {
+			if (!values.email || !values.password || !values.name) {
+				return;
+			}
 			try {
 				e.preventDefault();
-				await dispatch(register({ email, password, name })).unwrap();
+				await dispatch(
+					register({
+						email: values.email,
+						password: values.password,
+						name: values.name,
+					})
+				).unwrap();
 				navigate('/');
 			} catch (err) {
 				console.error('Registration failed:', err);
 			}
 		},
-		[dispatch, email, password, name, navigate]
+		[dispatch, values.email, values.password, values.name, navigate]
 	);
 
 	return (
@@ -50,23 +54,23 @@ export const RegistrationPage = (): React.JSX.Element => {
 				<Input
 					type={'text'}
 					placeholder={'Имя'}
-					onChange={(e) => setName(e.target.value)}
-					value={name}
+					onChange={handleChange}
+					value={values.name}
 					name={'name'}
 					error={false}
 					size={'default'}
 					extraClass='mb-6'
 				/>
 				<EmailInput
-					onChange={onChangeEmail}
-					value={email}
+					onChange={handleChange}
+					value={values.email}
 					name={'email'}
 					isIcon={false}
 					extraClass='mb-6'
 				/>
 				<PasswordInput
-					onChange={onChangePassword}
-					value={password}
+					onChange={handleChange}
+					value={values.password}
 					name={'password'}
 					extraClass='mb-6'
 					autoComplete='current-password'

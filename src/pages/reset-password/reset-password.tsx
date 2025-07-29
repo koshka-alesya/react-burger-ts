@@ -1,4 +1,4 @@
-import React, { FormEvent, useCallback, useState } from 'react';
+import React, { FormEvent, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
 	Button,
@@ -11,21 +11,16 @@ import { getIsLoading } from '@/services/user/user-slice';
 import { AppDispatch } from '@/services/store';
 import { resetPassword } from '@/services/user/action';
 import Loader from '@/components/loader/loader';
+import { useForm } from '@/hooks/useForm';
 
 export const ResetPasswordPage = (): React.JSX.Element => {
-	const [password, setPassword] = useState('');
-	const [token, setToken] = useState('');
+	const { values, handleChange } = useForm({
+		token: '',
+		password: '',
+	});
 	const navigate = useNavigate();
 	const dispatch = useDispatch<AppDispatch>();
 	const loading = useSelector(getIsLoading);
-
-	const onChangePassword = (e: React.ChangeEvent<HTMLInputElement>) => {
-		setPassword(e.target.value);
-	};
-
-	const onChangeToken = (e: React.ChangeEvent<HTMLInputElement>) => {
-		setToken(e.target.value);
-	};
 
 	const handleNavigateToLogin = () => {
 		navigate('/login');
@@ -34,16 +29,18 @@ export const ResetPasswordPage = (): React.JSX.Element => {
 	const handleResetPassword = useCallback(
 		async (e: FormEvent<HTMLFormElement>) => {
 			e.preventDefault();
-			if (!password || !token) return;
+			if (!values.password || !values.token) return;
 			try {
-				await dispatch(resetPassword({ password, token })).unwrap();
+				await dispatch(
+					resetPassword({ password: values.password, token: values.token })
+				).unwrap();
 				sessionStorage.setItem('forgotVisited', 'false');
 				navigate('/login');
 			} catch (error) {
 				console.error('Password reset failed:', error);
 			}
 		},
-		[dispatch, password, token, navigate]
+		[dispatch, values.password, values.token, navigate]
 	);
 
 	return (
@@ -51,8 +48,8 @@ export const ResetPasswordPage = (): React.JSX.Element => {
 			<p className='text text_type_main-medium mb-6'>Восстановление пароля</p>
 			<form onSubmit={handleResetPassword}>
 				<PasswordInput
-					onChange={onChangePassword}
-					value={password}
+					onChange={handleChange}
+					value={values.password}
 					placeholder='Введите новый пароль'
 					name={'password'}
 					extraClass='mb-6'
@@ -61,9 +58,9 @@ export const ResetPasswordPage = (): React.JSX.Element => {
 				<Input
 					type={'text'}
 					placeholder={'Введите код из письма'}
-					onChange={onChangeToken}
-					value={token}
-					name={'code'}
+					onChange={handleChange}
+					value={values.token}
+					name={'token'}
 					error={false}
 					size={'default'}
 					extraClass='mb-6'

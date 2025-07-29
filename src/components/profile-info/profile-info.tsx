@@ -1,10 +1,4 @@
-import React, {
-	ChangeEvent,
-	FormEvent,
-	useEffect,
-	useRef,
-	useState,
-} from 'react';
+import React, { FormEvent, useEffect, useRef } from 'react';
 import {
 	Button,
 	EmailInput,
@@ -15,46 +9,55 @@ import { getUserState } from '@/services/user/user-slice';
 import { useEditUser } from '@/hooks/useEditUser';
 import { useSelector } from 'react-redux';
 import Loader from '../loader/loader';
+import { useForm } from '@/hooks/useForm';
 
 export const ProfileInfo = (): React.JSX.Element | null => {
 	const { user, loading } = useSelector(getUserState);
-	const [email, setEmail] = useState(user?.email || '');
-	const [name, setName] = useState(user?.name || '');
-	const [password, setPassword] = useState('');
-	const [nameDisabled, setNameDisabled] = useState<boolean>(true);
-	const [shouldFocus, setShouldFocus] = useState(false);
+	const { values, handleChange, setValues } = useForm({
+		email: user?.email || '',
+		name: user?.name || '',
+		password: '',
+		nameDisabled: true,
+		shouldFocus: false,
+	});
+
 	const inputRef = useRef<HTMLInputElement>(null);
 
-	const { handleEditUser, isChanged } = useEditUser(email, name, password);
-
-	const onChangeEmail = (e: ChangeEvent<HTMLInputElement>) => {
-		setEmail(e.target.value);
-	};
-
-	const onChangePassword = (e: ChangeEvent<HTMLInputElement>) => {
-		setPassword(e.target.value);
-	};
+	const { handleEditUser, isChanged } = useEditUser(
+		values.email,
+		values.name,
+		values.password
+	);
 
 	const handleCancel = () => {
-		setEmail(user?.email || '');
-		setName(user?.name || '');
-		setPassword('');
+		setValues({
+			...values,
+			email: user?.email || '',
+			name: user?.name || '',
+			password: '',
+		});
 	};
 
 	const handleIconClick = () => {
-		setNameDisabled(false);
-		setShouldFocus(true);
+		setValues({
+			...values,
+			nameDisabled: false,
+			shouldFocus: true,
+		});
 	};
 
 	useEffect(() => {
-		if (!nameDisabled && shouldFocus && inputRef.current) {
+		if (!values.nameDisabled && values.shouldFocus && inputRef.current) {
 			inputRef.current.focus();
-			setShouldFocus(false);
+			setValues({
+				...values,
+				shouldFocus: false,
+			});
 		}
-	}, [nameDisabled, shouldFocus]);
+	}, [values.nameDisabled, values.shouldFocus]);
 
 	const onBlur = () => {
-		setNameDisabled(true);
+		setValues({ ...values, nameDisabled: true });
 	};
 
 	const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
@@ -72,26 +75,26 @@ export const ProfileInfo = (): React.JSX.Element | null => {
 				type={'text'}
 				ref={inputRef}
 				placeholder={'Имя'}
-				onChange={(e) => setName(e.target.value)}
-				value={name}
+				onChange={handleChange}
+				value={values.name}
 				name={'name'}
 				size={'default'}
 				icon={'EditIcon'}
 				extraClass='mb-6'
-				disabled={nameDisabled}
+				disabled={values.nameDisabled}
 				onIconClick={handleIconClick}
 				onBlur={onBlur}
 			/>
 			<EmailInput
-				onChange={onChangeEmail}
-				value={email}
+				onChange={handleChange}
+				value={values.email}
 				name={'email'}
 				isIcon={true}
 				extraClass='mb-6'
 			/>
 			<PasswordInput
-				onChange={onChangePassword}
-				value={password}
+				onChange={handleChange}
+				value={values.password}
 				name={'password'}
 				icon={'EditIcon'}
 				autoComplete='current-password'
