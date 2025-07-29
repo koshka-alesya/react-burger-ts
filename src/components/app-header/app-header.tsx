@@ -32,9 +32,9 @@ export const AppHeader = () => {
 					</NavLink>
 				</div>
 
-				<div className={styles.logo}>
+				<NavLink to='/' end className={styles.logo}>
 					<Logo />
-				</div>
+				</NavLink>
 
 				<NavLink
 					to='/profile'
