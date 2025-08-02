@@ -18,17 +18,27 @@ import {
 } from '@/services/burger-constructor/burger-constructor-slice';
 import Loader from '../loader/loader';
 import styles from './burger-constructor.module.css';
+import { getUser } from '@/services/user/user-slice';
+import { useNavigate } from 'react-router-dom';
 
 export const BurgerConstructor = (): React.JSX.Element => {
 	const { isModalOpen, openModal, closeModal } = useModal();
 	const { loading } = useSelector(getOrderState);
 	const { bun } = useSelector(getBurgerContructor);
+	const user = useSelector(getUser);
 	const totalPrice = useSelector(getBurgerPrice);
 	const dispatch = useDispatch<AppDispatch>();
+	const navigate = useNavigate();
 
 	const handleCreateOrder = useCallback(
 		async (e: SyntheticEvent) => {
 			e.stopPropagation();
+
+			if (!user) {
+				navigate('/login');
+				return;
+			}
+
 			if (loading) {
 				return;
 			}
@@ -46,7 +56,7 @@ export const BurgerConstructor = (): React.JSX.Element => {
 				console.error('Ошибка при создании заказа:', err);
 			}
 		},
-		[dispatch, bun, loading, openModal]
+		[dispatch, bun, loading, openModal, navigate, user]
 	);
 
 	return (

@@ -1,5 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { addOrder } from '../../utils/order-api';
+import { addOrder } from '../../utils/api/order-api';
 import { TIngredient } from '@/utils/types';
 import { RootState } from '../store';
 

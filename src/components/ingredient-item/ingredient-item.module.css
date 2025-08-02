@@ -16,3 +16,8 @@
 	text-align: center;
 	overflow-wrap: break-word;
 }
+
+.link {
+	color: inherit;
+	text-decoration: none;
+}
