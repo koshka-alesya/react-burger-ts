@@ -1,10 +1,6 @@
-import { PayloadAction } from '@reduxjs/toolkit';
+import { IActionWithError } from '../types';
 
-interface ActionWithError<T = unknown> extends PayloadAction<T> {
-	error?: { message?: string };
-}
-
-export const getErrorMessageFromAction = (action: ActionWithError): string => {
+export const getErrorMessageFromAction = (action: IActionWithError): string => {
 	if (typeof action.payload === 'string') {
 		return action.payload;
 	}

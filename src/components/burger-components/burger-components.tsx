@@ -59,8 +59,7 @@ export const BurgerComponents = (): React.JSX.Element | null => {
 								key={ingredient.uuid}
 								id={ingredient.uuid || ingredient._id}
 								index={index}
-								moveItem={moveItem}
-								payload={ingredient}>
+								moveItem={moveItem}>
 								<div className={styles.item}>
 									<DragIcon
 										type='primary'

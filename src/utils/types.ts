@@ -1,3 +1,9 @@
+import { PayloadAction } from '@reduxjs/toolkit';
+
+export interface IActionWithError<T = unknown> extends PayloadAction<T> {
+	error?: { message?: string };
+}
+
 export type TIngredient = {
 	_id: string;
 	name: string;
@@ -14,91 +20,64 @@ export type TIngredient = {
 	uuid?: string;
 };
 
-interface BasicResponse {
-	success: boolean;
-	message: string;
+export type TUser = {
+	email: string;
+	name: string;
+};
+
+export interface IBasicResponse {
+	success: false;
+	message?: string;
 }
 
-export interface LoginRequest {
+export interface ILoginRequest {
 	email: string;
 	password: string;
 }
 
-export interface LoginResponse {
-	success: boolean;
-	accessToken: string;
-	refreshToken: string;
-	user: {
-		email: string;
-		name: string;
-	};
+export interface IRegisterRequest extends ILoginRequest {
+	name: string;
 }
 
-export interface LogoutRequest {
+export interface ITokenRequest {
 	token: string;
 }
-
-export interface LogoutResponse extends BasicResponse {}
-
-export interface RegisterRequest {
+export interface IForgotPasswordRequest {
 	email: string;
+}
+
+export interface IResetPasswordRequest {
 	password: string;
-	name: string;
-}
-
-export interface RegisterResponse {
-	success: boolean;
-	user: {
-		email: string;
-		name: string;
-	};
-	accessToken: string;
-	refreshToken: string;
-}
-
-export interface RefreshTokenRequest {
 	token: string;
 }
 
-export interface RefreshTokenResponse {
-	success: boolean;
-	accessToken: string;
-	refreshToken: string;
-}
-
-export interface User {
-	email: string;
-	name: string;
-}
-
-export interface UserResponse {
-	success: boolean;
-	user: User;
-}
-
-export interface UpdateUserRequest {
+export interface IUpdateUserRequest {
 	name?: string;
 	email?: string;
 	password?: string;
 }
 
-export interface UserState {
-	user: User | null;
+interface IAuthTokens {
+	accessToken: string;
+	refreshToken: string;
+}
+
+interface IWithUser {
+	user: TUser;
+}
+
+export interface LoginResponse extends IBasicResponse, IAuthTokens, IWithUser {}
+export interface RegisterResponse
+	extends IBasicResponse,
+		IAuthTokens,
+		IWithUser {}
+export interface RefreshTokenResponse extends IBasicResponse, IAuthTokens {}
+export interface UserResponse extends IBasicResponse, IWithUser {}
+
+export interface IUserState {
+	user: TUser | null;
 	isAuthChecked: boolean;
 	loading: boolean;
 	error: string | null;
 	message?: string | null;
 }
-
-export interface ForgotPasswordRequest {
-	email: string;
-}
-
-export interface ForgotPasswordResponse extends BasicResponse {}
-
-export interface ResetPasswordRequest {
-	password: string;
-	token: string;
-}
-
-export interface ResetPasswordResponse extends BasicResponse {}

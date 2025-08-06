@@ -1,4 +1,4 @@
-import { UpdateUserRequest, UserResponse } from '../types';
+import { IUpdateUserRequest, UserResponse } from '../types';
 import { request } from './api-helper';
 import { API_ENDPOINTS } from './endpoints';
 
@@ -9,7 +9,7 @@ export async function getUserInfo(): Promise<UserResponse> {
 }
 
 export async function updateUserInfo(
-	data: UpdateUserRequest
+	data: IUpdateUserRequest
 ): Promise<UserResponse> {
 	return request(API_ENDPOINTS.USER_INFO, {
 		method: 'PATCH',
