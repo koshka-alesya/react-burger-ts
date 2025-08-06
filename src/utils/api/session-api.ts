@@ -1,19 +1,20 @@
 import {
-	LoginRequest,
+	ILoginRequest,
 	LoginResponse,
-	LogoutRequest,
+	ITokenRequest,
 	RefreshTokenResponse,
-	RegisterRequest,
+	IRegisterRequest,
 	RegisterResponse,
-	ResetPasswordRequest,
-	ResetPasswordResponse,
-	ForgotPasswordRequest,
-	ForgotPasswordResponse,
+	IResetPasswordRequest,
+	IForgotPasswordRequest,
+	IBasicResponse,
 } from '../types';
 import { request } from './api-helper';
 import { API_ENDPOINTS } from './endpoints';
 
-export const loginUser = async (data: LoginRequest): Promise<LoginResponse> => {
+export const loginUser = async (
+	data: ILoginRequest
+): Promise<LoginResponse> => {
 	const result = await request(
 		API_ENDPOINTS.LOGIN,
 		{
@@ -37,7 +38,7 @@ export const logoutUser = async (): Promise<void> => {
 		return;
 	}
 
-	const payload: LogoutRequest = {
+	const payload: ITokenRequest = {
 		token: refreshToken,
 	};
 
@@ -55,7 +56,7 @@ export const logoutUser = async (): Promise<void> => {
 };
 
 export async function registerUser(
-	data: RegisterRequest
+	data: IRegisterRequest
 ): Promise<RegisterResponse> {
 	const result = await request(
 		API_ENDPOINTS.REGISTER,
@@ -95,8 +96,8 @@ export const refreshToken = async (): Promise<RefreshTokenResponse> => {
 };
 
 export const resetPassword = async (
-	data: ResetPasswordRequest
-): Promise<ResetPasswordResponse> => {
+	data: IResetPasswordRequest
+): Promise<IBasicResponse> => {
 	return request(
 		API_ENDPOINTS.RESET_PASSWORD,
 		{
@@ -108,8 +109,8 @@ export const resetPassword = async (
 };
 
 export const forgotPassword = async (
-	data: ForgotPasswordRequest
-): Promise<ForgotPasswordResponse> => {
+	data: IForgotPasswordRequest
+): Promise<IBasicResponse> => {
 	return request(
 		API_ENDPOINTS.FORGOT_PASSWORD,
 		{

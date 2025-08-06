@@ -1,22 +1,21 @@
 import React from 'react';
 import styles from './drop-target.module.css';
 import { useDrop } from 'react-dnd';
-import { TIngredient } from '@/utils/types';
 
-interface DropTargetProps {
+interface IDropTargetProps<T> {
 	children: React.ReactNode;
-	onDropHandler: (item: unknown) => void;
+	onDropHandler: (item: T) => void;
 	accept: string;
 }
 
-export const DropTarget = ({
+export const DropTarget = <T,>({
 	children,
 	onDropHandler,
 	accept,
-}: DropTargetProps): React.JSX.Element => {
+}: IDropTargetProps<T>): React.JSX.Element => {
 	const [{ isHover }, dropTarget] = useDrop({
 		accept,
-		drop(item: TIngredient) {
+		drop(item: T) {
 			onDropHandler(item);
 		},
 		collect: (monitor) => ({

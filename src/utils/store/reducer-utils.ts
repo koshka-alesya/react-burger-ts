@@ -1,18 +1,19 @@
+import { IActionWithError } from '../types';
 import { getErrorMessageFromAction } from './parse-error';
 
-interface LoadingErrorState {
+interface ILoadingErrorState {
 	loading: boolean;
 	error: string | null;
 }
 
-export const handlePending = <T extends LoadingErrorState>(state: T) => {
+export const handlePending = <T extends ILoadingErrorState>(state: T) => {
 	state.loading = true;
 	state.error = null;
 };
 
-export const handleRejected = <T extends LoadingErrorState, A>(
+export const handleRejected = <T extends ILoadingErrorState>(
 	state: T,
-	action: A
+	action: IActionWithError
 ) => {
 	state.loading = false;
 	state.error = getErrorMessageFromAction(action);
