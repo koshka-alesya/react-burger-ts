@@ -57,3 +57,8 @@ export const getMains = createSelector([getIngredients], (items) => {
 export const getSauces = createSelector([getIngredients], (items) => {
 	return items.filter((item) => item.type === 'sauce');
 });
+
+export const getIngredientById = (id: string) =>
+	createSelector([getIngredients], (items) =>
+		items.find((item) => item._id === id)
+	);
