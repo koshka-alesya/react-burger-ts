@@ -8,10 +8,10 @@ import {
 	resetPassword,
 	forgotPassword,
 } from './action';
-import { User, UserState } from '@/utils/types';
+import { TUser, IUserState } from '@/utils/types';
 import { handlePending, handleRejected } from '@/utils/store/reducer-utils';
 
-const initialState: UserState = {
+const initialState: IUserState = {
 	user: null,
 	isAuthChecked: false,
 	loading: false,
@@ -23,7 +23,7 @@ export const userSlice = createSlice({
 	name: 'user',
 	initialState,
 	reducers: {
-		setUser: (state, action: PayloadAction<User | null>) => {
+		setUser: (state, action: PayloadAction<TUser | null>) => {
 			state.user = action.payload;
 		},
 		setIsAuthChecked: (state, action: PayloadAction<boolean>) => {
