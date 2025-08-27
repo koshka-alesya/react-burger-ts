@@ -1,13 +1,13 @@
 .profile {
 	display: flex;
 	justify-content: center;
-	margin-top: 180px;
 	padding: 0 20px;
 }
 
 .nav {
 	flex-shrink: 0;
 	width: 320px;
+	margin-top: 180px;
 	margin-right: 60px;
 }
 

@@ -25,8 +25,7 @@ export const burgerConstructorSlice = createSlice({
 			}
 			let price = state.bun.price;
 			state.ingredients.forEach((ingredient) => {
-				const ingredientCount = state.ingredientCounts[ingredient._id] || 0;
-				price += ingredient.price * ingredientCount;
+				price += ingredient.price;
 			});
 			return price;
 		},

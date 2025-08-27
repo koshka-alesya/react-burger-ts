@@ -1,0 +1,29 @@
+.card_order {
+	gap: 24px;
+	box-sizing: border-box;
+	padding: 24px;
+	background: var(--background);
+	border-radius: 40px;
+}
+
+.header {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+	height: 24px;
+}
+
+.status.done {
+	color: var(--colors-interface-success);
+}
+
+.price {
+	display: flex;
+}
+
+.footer {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}

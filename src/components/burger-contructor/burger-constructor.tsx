@@ -9,8 +9,8 @@ import { OrderDetails } from '../order-details/order-details';
 import { useModal } from '@/hooks/useModal';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch } from '@/services/store';
-import { createOrder } from '@/services/order/actions';
-import { getOrderState } from '@/services/order/order-slice';
+import { createOrder } from '@/services/create-order/actions';
+import { getOrderState } from '@/services/create-order/create-order-slice';
 import {
 	getBurgerContructor,
 	getBurgerPrice,

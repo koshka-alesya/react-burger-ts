@@ -1,11 +1,12 @@
 import React, { useEffect } from 'react';
-import styles from './order-history.module.css';
+import styles from './order-feed.module.css';
+import { OrdersStats } from '@/components/orders-stats/orders-stats';
 import { ReduxStore } from '@/services/rootReducer';
 import {
-	getUserProcessedOrders,
+	getAllProcessedOrders,
 	getConnectionStatus,
-} from '@/services/user-orders/user-orders-slice';
-import { ActionCreator } from '@/services/user-orders/actions';
+} from '@/services/all-orders/all-orders-slice';
+import { ActionCreator } from '@/services/all-orders/actions';
 import { connect } from 'react-redux';
 import { ConnectionStatus, TOrderProcessed } from '@/utils/types';
 import Loader from '@/components/loader/loader';
@@ -22,7 +23,7 @@ interface IActionProps {
 	disconnect: () => void;
 }
 
-const OrderHistory = ({
+const OrderFeed = ({
 	connectionStatus,
 	connect,
 	disconnect,
@@ -36,17 +37,25 @@ const OrderHistory = ({
 	}, []);
 
 	return (
-		<div className={`${styles.order_history} pt-10 pb-10`}>
+		<div className={styles.order_feed}>
 			{connectionStatus !== ConnectionStatus.ONLINE && <Loader />}
 			{connectionStatus === ConnectionStatus.ONLINE && (
-				<OrdersList orders={data} personal />
+				<>
+					<h1 className={`${styles.title} text text_type_main-large mt-5 mb-5`}>
+						Лента заказов
+					</h1>
+					<main className={`${styles.main}`}>
+						<OrdersList orders={data} />
+						<OrdersStats />
+					</main>
+				</>
 			)}
 		</div>
 	);
 };
 
 const mapStateToProps = (state: ReduxStore): IStateProps => ({
-	data: getUserProcessedOrders(state),
+	data: getAllProcessedOrders(state),
 	connectionStatus: getConnectionStatus(state),
 });
 
@@ -55,4 +64,4 @@ const mapDispatchToProps = (dispatch: AppDispatch): IActionProps => ({
 	disconnect: () => dispatch(ActionCreator.disconnect()),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(OrderHistory);
+export default connect(mapStateToProps, mapDispatchToProps)(OrderFeed);

@@ -10,6 +10,7 @@ import { useEditUser } from '@/hooks/useEditUser';
 import { useSelector } from 'react-redux';
 import Loader from '../loader/loader';
 import { useForm } from '@/hooks/useForm';
+import styles from './profile-info.module.css';
 
 export const ProfileInfo = (): React.JSX.Element | null => {
 	const { user, loading } = useSelector(getUserState);
@@ -70,7 +71,7 @@ export const ProfileInfo = (): React.JSX.Element | null => {
 	}
 
 	return (
-		<form onSubmit={handleSubmit}>
+		<form onSubmit={handleSubmit} className={styles.profile_info}>
 			<Input
 				type={'text'}
 				ref={inputRef}

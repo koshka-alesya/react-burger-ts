@@ -9,6 +9,12 @@
 	width: 100vw;
 	height: 100vh;
 	background-color: rgb(0 0 0 / 50%);
+	transition: background-color 0.3s ease;
+}
+
+.modal_overlay.closing {
+	background-color: rgb(0 0 0 / 0%);
+	pointer-events: none;
 }
 
 .modal {
@@ -19,6 +25,11 @@
 	background-color: var(--background);
 	border: 1px solid #4c4cff33;
 	border-radius: 40px;
+	transform: translateY(0);
+	opacity: 1;
+	transition:
+		opacity 0.3s ease,
+		transform 0.3s ease;
 }
 
 .header {
@@ -30,4 +41,10 @@
 .close_icon {
 	margin-left: auto;
 	cursor: pointer;
+}
+
+.closing {
+	transform: translateY(-20px);
+	opacity: 0;
+	pointer-events: none;
 }
