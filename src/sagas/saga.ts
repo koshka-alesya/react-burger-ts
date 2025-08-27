@@ -47,60 +47,6 @@ function createSocketChannel(socket: WebSocket): EventChannel<string> {
 	});
 }
 
-/*export function* listenForSocketMessages<T>(
-	wsUrl: string,
-	actions: TSagaActions<T>,
-	withToken: boolean = false
-): SagaIterator {
-	let socket: WebSocket | undefined;
-	let socketChannel: EventChannel<string> | undefined;
-
-	try {
-		while (true) {
-			try {
-				yield put(actions.setConnectionStatus(ConnectionStatus.CONNECTING));
-
-				const url = withToken ? `${wsUrl}?token=${getAccessToken()}` : wsUrl;
-
-				socket = (yield call(createWebSocketConnection, url)) as WebSocket;
-				socketChannel = (yield call(
-					createSocketChannel,
-					socket
-				)) as EventChannel<string>;
-
-				yield put(actions.setConnectionStatus(ConnectionStatus.ONLINE));
-
-				while (true) {
-					const payload: string | typeof END = yield take(socketChannel);
-					if (payload === END) break;
-
-					yield put(actions.updateData(JSON.parse(payload as string)));
-				}
-			} catch (error) {
-				yield put(actions.connectionError(`WebSocket error: ${String(error)}`));
-			} finally {
-				if (yield cancelled()) {
-					if (socketChannel) socketChannel.close();
-					if (socket) socket.close();
-					yield put(actions.setConnectionStatus(ConnectionStatus.OFFLINE));
-					break;
-				}
-
-				if (socketChannel) socketChannel.close();
-				if (socket) socket.close();
-				yield delay(RECONNECT_TIME);
-			}
-		}
-	} finally {
-		if (yield cancelled()) {
-			if (socketChannel) socketChannel.close();
-			if (socket) socket.close();
-			yield put(actions.setConnectionStatus(ConnectionStatus.OFFLINE));
-		}
-	}
-}
-*/
-
 export function* listenForSocketMessages<T>(
 	wsUrl: string,
 	actions: TSagaActions<T>,
