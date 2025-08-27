@@ -20,11 +20,15 @@ export function* userOrdersConnect(): SagaIterator {
 		}
 
 		socketTask = yield fork(() =>
-			listenForSocketMessages(WS_URL_USER, {
-				setConnectionStatus,
-				connectionError,
-				updateData,
-			})
+			listenForSocketMessages(
+				WS_URL_USER,
+				{
+					setConnectionStatus,
+					connectionError,
+					updateData,
+				},
+				true
+			)
 		);
 
 		const result = yield race({
