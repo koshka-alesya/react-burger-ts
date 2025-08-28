@@ -7,8 +7,6 @@ import {
 import { Modal } from '../modal/modal';
 import { OrderDetails } from '../order-details/order-details';
 import { useModal } from '@/hooks/useModal';
-import { useDispatch, useSelector } from 'react-redux';
-import { AppDispatch } from '@/services/store';
 import { createOrder } from '@/services/create-order/actions';
 import { getOrderState } from '@/services/create-order/create-order-slice';
 import {
@@ -20,14 +18,15 @@ import Loader from '../loader/loader';
 import styles from './burger-constructor.module.css';
 import { getUser } from '@/services/user/user-slice';
 import { useNavigate } from 'react-router-dom';
+import { useAppDispatch, useAppSelector } from '@/hooks/hooks';
 
 export const BurgerConstructor = (): React.JSX.Element => {
 	const { isModalOpen, openModal, closeModal } = useModal();
-	const { loading } = useSelector(getOrderState);
-	const { bun } = useSelector(getBurgerContructor);
-	const user = useSelector(getUser);
-	const totalPrice = useSelector(getBurgerPrice);
-	const dispatch = useDispatch<AppDispatch>();
+	const { loading } = useAppSelector(getOrderState);
+	const { bun } = useAppSelector(getBurgerContructor);
+	const user = useAppSelector(getUser);
+	const totalPrice = useAppSelector(getBurgerPrice);
+	const dispatch = useAppDispatch();
 	const navigate = useNavigate();
 
 	const handleCreateOrder = useCallback(

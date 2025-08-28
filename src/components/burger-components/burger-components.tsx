@@ -2,7 +2,6 @@ import React, { useCallback } from 'react';
 import { DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './burger-components.module.css';
 import { BurgerComponent } from '../burger-component/burger-component';
-import { useDispatch, useSelector } from 'react-redux';
 import {
 	getBurgerContructor,
 	moveIngredient,
@@ -13,10 +12,11 @@ import {
 import { TIngredient } from '@/utils/types';
 import { DropTarget } from '../dnd/drop-target/drop-target';
 import { DragItem } from '../dnd/drag-item/drag-item';
+import { useAppDispatch, useAppSelector } from '@/hooks/hooks';
 
 export const BurgerComponents = (): React.JSX.Element | null => {
-	const { bun, ingredients } = useSelector(getBurgerContructor);
-	const dispatch = useDispatch();
+	const { bun, ingredients } = useAppSelector(getBurgerContructor);
+	const dispatch = useAppDispatch();
 
 	const handleDrop = useCallback(
 		(item: TIngredient) => {

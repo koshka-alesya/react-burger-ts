@@ -21,8 +21,6 @@ import OrderHistory from '../order-history/order-history';
 import { Modal } from '../modal/modal';
 import { IngredientDetailsPage } from '@/pages/ingredient-details/ingredient-details';
 import { IngredientDetailsModal } from '../ingredient-details/ingredient-details-modal';
-import { AppDispatch } from '@/services/store';
-import { useDispatch, useSelector } from 'react-redux';
 import { loadIngredients } from '@/services/ingredients/actions';
 import { getIngredientsState } from '@/services/ingredients/ingredients-slice';
 import Loader from '../loader/loader';
@@ -31,14 +29,15 @@ import { OrderInfoPage } from '@/pages/order-info/order-info';
 import { OrderInfoModal } from '../order-info/order-info-modal';
 import { fetchUser } from '@/services/user/action';
 import { getIsAuthChecked, setIsAuthChecked } from '@/services/user/user-slice';
+import { useAppDispatch, useAppSelector } from '@/hooks/hooks';
 
 export const App = (): React.JSX.Element | null => {
 	const navigate = useNavigate();
 	const location = useLocation();
-	const dispatch = useDispatch<AppDispatch>();
+	const dispatch = useAppDispatch();
 	const navigationType = useNavigationType();
-	const { error, loading } = useSelector(getIngredientsState);
-	const isAuthChecked = useSelector(getIsAuthChecked);
+	const { error, loading } = useAppSelector(getIngredientsState);
+	const isAuthChecked = useAppSelector(getIsAuthChecked);
 	const background = location.state && location.state.background;
 	const isModal = background && navigationType === 'PUSH';
 

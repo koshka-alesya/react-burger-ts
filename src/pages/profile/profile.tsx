@@ -1,13 +1,12 @@
 import { NavLink, Outlet, useNavigate } from 'react-router-dom';
 import styles from './profile.module.css';
-import { useDispatch } from 'react-redux';
-import { AppDispatch } from '@/services/store';
 import { useCallback } from 'react';
 import { logout } from '@/services/user/action';
+import { useAppDispatch } from '@/hooks/hooks';
 
 export const ProfilePage = (): React.JSX.Element => {
 	const navigate = useNavigate();
-	const dispatch = useDispatch<AppDispatch>();
+	const dispatch = useAppDispatch();
 
 	const handleLogout = useCallback(
 		async (e: React.MouseEvent) => {
