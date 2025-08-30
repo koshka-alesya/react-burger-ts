@@ -1,6 +1,5 @@
 import React, { useMemo } from 'react';
 import styles from './orders-stats.module.css';
-import { useSelector } from 'react-redux';
 import {
 	getAllOrdersState,
 	getDoneOrders,
@@ -8,14 +7,15 @@ import {
 } from '@/services/all-orders/all-orders-slice';
 import { ConnectionStatus } from '@/utils/types';
 import Loader from '../loader/loader';
+import { useAppSelector } from '@/hooks/hooks';
 
 const MAX_ITEMS_PER_COLUMN = 10;
 
 export const OrdersStats = (): React.JSX.Element => {
-	const { status, total, totalToday } = useSelector(getAllOrdersState);
+	const { status, total, totalToday } = useAppSelector(getAllOrdersState);
 
-	const doneOrders = useSelector(getDoneOrders);
-	const pendingOrders = useSelector(getPendingOrders);
+	const doneOrders = useAppSelector(getDoneOrders);
+	const pendingOrders = useAppSelector(getPendingOrders);
 
 	const doneOrdersColumn1 = useMemo(
 		() => doneOrders.slice(0, MAX_ITEMS_PER_COLUMN),

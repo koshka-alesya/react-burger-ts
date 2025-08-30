@@ -1,11 +1,11 @@
 import React from 'react';
 import done from '../../images/done.png';
 import styles from './order-details.module.css';
-import { useSelector } from 'react-redux';
 import { getOrderState } from '@/services/create-order/create-order-slice';
+import { useAppSelector } from '@/hooks/hooks';
 
 export const OrderDetails = (): React.JSX.Element | null => {
-	const { order } = useSelector(getOrderState);
+	const { order } = useAppSelector(getOrderState);
 
 	if (!order) {
 		return null;

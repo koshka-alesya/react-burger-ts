@@ -6,9 +6,9 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useDrag } from 'react-dnd';
 import styles from './ingredient-item.module.css';
-import { useSelector } from 'react-redux';
 import { getIngredientCounts } from '@/services/burger-constructor/burger-constructor-slice';
 import { Link, useLocation } from 'react-router-dom';
+import { useAppSelector } from '@/hooks/hooks';
 type TIngredientProps = {
 	ingredient: TIngredient;
 };
@@ -17,7 +17,7 @@ export const IngredientItem = ({
 	ingredient,
 }: TIngredientProps): React.JSX.Element => {
 	const location = useLocation();
-	const counts = useSelector(getIngredientCounts);
+	const counts = useAppSelector(getIngredientCounts);
 	const count = counts[ingredient._id];
 
 	const [, dragRef] = useDrag({

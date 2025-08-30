@@ -7,13 +7,13 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import { getUserState } from '@/services/user/user-slice';
 import { useEditUser } from '@/hooks/useEditUser';
-import { useSelector } from 'react-redux';
 import Loader from '../loader/loader';
 import { useForm } from '@/hooks/useForm';
 import styles from './profile-info.module.css';
+import { useAppSelector } from '@/hooks/hooks';
 
 export const ProfileInfo = (): React.JSX.Element | null => {
-	const { user, loading } = useSelector(getUserState);
+	const { user, loading } = useAppSelector(getUserState);
 	const { values, handleChange, setValues } = useForm({
 		email: user?.email || '',
 		name: user?.name || '',

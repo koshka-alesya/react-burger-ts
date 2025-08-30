@@ -1,8 +1,8 @@
 import React, { ReactElement } from 'react';
-import { useSelector } from 'react-redux';
 import { Navigate, useLocation } from 'react-router-dom';
 import { getIsAuthChecked, getUser } from '../../services/user/user-slice';
 import Loader from '../loader/loader';
+import { useAppSelector } from '@/hooks/hooks';
 
 interface ProtectedRouteProps {
 	onlyUnAuth?: boolean;
@@ -15,8 +15,8 @@ export const ProtectedRouteElement: React.FC<ProtectedRouteProps> = ({
 	component,
 	requireForgotFlow = false,
 }) => {
-	const isAuthChecked = useSelector(getIsAuthChecked);
-	const user = useSelector(getUser);
+	const isAuthChecked = useAppSelector(getIsAuthChecked);
+	const user = useAppSelector(getUser);
 	const location = useLocation();
 	const isUser = Boolean(user);
 
