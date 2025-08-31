@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { createOrder, TCreateOrderResponse } from './actions';
 
-type TOrderState = {
+export type TOrderState = {
 	order: TCreateOrderResponse | null;
 	loading: boolean;
 	error: string | null;

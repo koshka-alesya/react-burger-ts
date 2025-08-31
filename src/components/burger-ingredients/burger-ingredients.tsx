@@ -70,16 +70,19 @@ export const BurgerIngredients = (): React.JSX.Element => {
 						Соусы
 					</Tab>
 				</ul>
-				<ul className={styles.ingredients} ref={containerRef}>
-					<li className='mt-10' ref={bunRef}>
+				<ul
+					className={styles.ingredients}
+					ref={containerRef}
+					data-cy='ingredients'>
+					<li className='mt-10' ref={bunRef} data-cy='buns'>
 						<p className='text text_type_main-medium mb-6'>Булки</p>
 						<IngredientsGroup ingredients={buns} />
 					</li>
-					<li className='mt-10' ref={mainRef}>
+					<li className='mt-10' ref={mainRef} data-cy='mains'>
 						<p className='text text_type_main-medium mb-6 '>Начинки</p>
 						<IngredientsGroup ingredients={mains} />
 					</li>
-					<li className='mt-10 mb-10' ref={sauceRef}>
+					<li className='mt-10 mb-10' ref={sauceRef} data-cy='sauces'>
 						<p className='text text_type_main-medium mb-6'>Соусы</p>
 						<IngredientsGroup ingredients={sauces} />
 					</li>

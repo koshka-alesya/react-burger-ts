@@ -44,10 +44,14 @@ export const Modal = ({
 	return createPortal(
 		<ModalOverlay onClose={handleClose} isClosing={isClosing}>
 			<div
+				data-cy='modal'
 				className={`${styles.modal} p-10 ${isClosing ? styles.closing : ''}`}>
 				<div className={styles.header}>
 					<div className='text text_type_main-large'>{header}</div>
-					<div onClick={handleClose} className={styles.close_icon}>
+					<div
+						onClick={handleClose}
+						className={styles.close_icon}
+						data-cy='modal-close'>
 						<CloseIcon type='primary' />
 					</div>
 				</div>

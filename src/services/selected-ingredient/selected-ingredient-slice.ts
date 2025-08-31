@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { TIngredient } from '@/utils/types';
 
-type TSelectedIngredientState = {
+export type TSelectedIngredientState = {
 	ingredient: TIngredient | null;
 };
 

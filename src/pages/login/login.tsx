@@ -49,6 +49,7 @@ export const LoginPage = (): React.JSX.Element => {
 			<p className='text text_type_main-medium mb-6'>Вход</p>
 			<form onSubmit={handleLogin}>
 				<EmailInput
+					data-cy='login-email'
 					onChange={handleChange}
 					value={values.email}
 					name={'email'}
@@ -57,6 +58,7 @@ export const LoginPage = (): React.JSX.Element => {
 					autoComplete='off'
 				/>
 				<PasswordInput
+					data-cy='login-password'
 					onChange={handleChange}
 					value={values.password}
 					name={'password'}
@@ -64,6 +66,7 @@ export const LoginPage = (): React.JSX.Element => {
 					extraClass='mb-6'
 				/>
 				<Button
+					data-cy='login-button'
 					htmlType='submit'
 					type='primary'
 					size='large'
