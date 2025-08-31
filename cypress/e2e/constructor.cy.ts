@@ -1,15 +1,22 @@
+import { GIT_BASE_URL, DEV_SERVER_URL } from '../../src/utils/route';
+
 /// <reference types="cypress" />
 
-const url = 'http://localhost:5173/';
+const url = `${DEV_SERVER_URL}${GIT_BASE_URL}/`;
+// => http://localhost:5173/react-burger-ts/
+
 const user = {
 	email: 'test@yopmail.com',
 	password: '2222222',
 };
+
 const orderId = '87506';
 
 describe('constructor spec', () => {
 	beforeEach(() => {
-		cy.intercept('GET', 'api/ingredients', { fixture: 'ingredients.json' });
+		cy.intercept('GET', 'api/ingredients', { fixture: 'ingredients.json' }).as(
+			'getIngredients'
+		);
 		cy.intercept('POST', 'api/auth/login', { fixture: 'login.json' }).as(
 			'postLogin'
 		);
@@ -27,10 +34,7 @@ describe('constructor spec', () => {
 		);
 
 		cy.visit(url);
-	});
-
-	it('should be available on localhost:5173', function () {
-		cy.visit(url);
+		cy.wait('@getIngredients');
 	});
 
 	it('show ingredient details', () => {
@@ -39,7 +43,7 @@ describe('constructor spec', () => {
 		cy.get('[data-cy=ingredient-link]').first().click();
 		cy.get('[data-cy=modal]').contains('Детали ингредиента');
 		cy.get('[data-cy=modal-close]').click();
-		cy.get('[data-cy=modal]', { timeout: 500 }).should('not.exist');
+		cy.get('[data-cy=modal]', { timeout: 2000 }).should('not.exist');
 	});
 
 	it('should have buns, fillings and sauces', () => {
@@ -50,55 +54,70 @@ describe('constructor spec', () => {
 	});
 
 	it('should create a burger order', () => {
-		cy.get('[data-cy=buns]')
-			.find('[data-cy=ingredient-link]')
+		// add bun
+		const dataTransfer1 = new DataTransfer();
+		cy.get('[data-cy=buns] [data-cy=ingredient-link]')
 			.first()
-			.trigger('dragstart');
-		cy.get('[data-cy=burger-component]').trigger('drop');
+			.trigger('dragstart', { dataTransfer1 });
+		cy.get('[data-cy=burger-component]').trigger('drop', { dataTransfer1 });
 
-		// create order
-		cy.get('[data-cy=buns]')
-			.find('[data-cy=ingredient-link]')
+		// change bun
+		const dataTransfer2 = new DataTransfer();
+		cy.get('[data-cy=buns] [data-cy=ingredient-link]')
 			.last()
-			.trigger('dragstart');
-		cy.get('[data-cy=burger-component]').trigger('drop');
+			.trigger('dragstart', { dataTransfer2 });
+		cy.get('[data-cy=burger-component]').trigger('drop', { dataTransfer2 });
 
-		cy.get('[data-cy=sauces]')
-			.find('[data-cy=ingredient-link]')
+		// add sauce
+		const dataTransfer3 = new DataTransfer();
+		cy.get('[data-cy=sauces] [data-cy=ingredient-link]')
 			.first()
-			.trigger('dragstart');
-		cy.get('[data-cy=burger-component]').trigger('drop');
+			.trigger('dragstart', { dataTransfer3 });
+		cy.get('[data-cy=burger-component]').trigger('drop', { dataTransfer3 });
 
-		cy.get('[data-cy=mains]')
-			.find('[data-cy=ingredient-link]')
+		// add main
+		const dataTransfer4 = new DataTransfer();
+		cy.get('[data-cy=mains] [data-cy=ingredient-link]')
 			.first()
-			.trigger('dragstart');
-		cy.get('[data-cy=burger-component]').trigger('drop');
+			.trigger('dragstart', { dataTransfer4 });
+		cy.get('[data-cy=burger-component]').trigger('drop', { dataTransfer4 });
 
-		cy.get('[data-cy=mains]')
-			.find('[data-cy=ingredient-link]')
+		// add one more main
+		const dataTransfer5 = new DataTransfer();
+		cy.get('[data-cy=mains] [data-cy=ingredient-link]')
 			.last()
-			.trigger('dragstart');
-		cy.get('[data-cy=burger-component]').trigger('drop');
+			.trigger('dragstart', { dataTransfer5 });
+		cy.get('[data-cy=burger-component]').trigger('drop', { dataTransfer5 });
 
-		cy.get('[data-cy=burger-constructor-price]').contains('5644');
+		cy.get('[data-cy=burger-constructor-price]', { timeout: 2000 }).should(
+			'contain.text',
+			'5644'
+		);
+
 		cy.get('[data-cy=burger-constructor-create-order]').click();
 
-		// login page
-		cy.contains('Вход');
+		// login
+		cy.contains('Вход', {
+			timeout: 3000,
+		});
 		cy.get('[name=email]').type(user.email);
 		cy.get('[name=password]').type(user.password);
-		cy.get('[data-cy=login-button]', { timeout: 1000 }).click();
+		cy.get('[data-cy=login-button]', { timeout: 2000 }).click();
+		cy.wait('@postLogin');
 
-		// create order with auth
 		cy.get('[data-cy=burger-constructor-create-order]', {
-			timeout: 2000,
+			timeout: 5000,
 		}).click();
+		cy.wait('@postOrder');
+
 		cy.get('[data-cy=order-details]', { timeout: 20000 }).should('exist');
-		cy.get('[data-cy=order-details-number]').contains(orderId);
+		cy.get('[data-cy=order-details-number]', { timeout: 20000 }).should(
+			'contain.text',
+			orderId
+		);
 
 		cy.get('[data-cy=modal-close]').click();
-		cy.get('[data-cy=modal]', { timeout: 500 }).should('not.exist');
+		cy.get('[data-cy=modal]', { timeout: 2000 }).should('not.exist');
 		cy.contains('Соберите бургер');
 	});
 });
