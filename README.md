@@ -76,7 +76,3 @@ alias: {
 Проект выложен на GitHub Pages и доступен по ссылке:
 
 [https://koshka-alesya.github.io/react-burger-ts/](https://koshka-alesya.github.io/react-burger-ts/)
-
-```
-
-```

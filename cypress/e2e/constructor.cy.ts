@@ -10,6 +10,21 @@ const user = {
 	password: '2222222',
 };
 
+const ingredient = {
+	_id: '643d69a5c3f7b9001cfa093c',
+	name: 'Краторная булка N-200i',
+	type: 'bun',
+	proteins: 80,
+	fat: 24,
+	carbohydrates: 53,
+	calories: 420,
+	price: 1255,
+	image: 'https://code.s3.yandex.net/react/code/bun-02.png',
+	image_mobile: 'https://code.s3.yandex.net/react/code/bun-02-mobile.png',
+	image_large: 'https://code.s3.yandex.net/react/code/bun-02-large.png',
+	__v: 0,
+};
+
 const orderId = '87506';
 
 describe('constructor spec', () => {
@@ -42,6 +57,19 @@ describe('constructor spec', () => {
 
 		cy.get('[data-cy=ingredient-link]').first().click();
 		cy.get('[data-cy=modal]').contains('Детали ингредиента');
+		cy.get('[data-cy=modal] [data-cy=ingredient-name]').contains(
+			ingredient.name
+		);
+		cy.get('[data-cy=modal] [data-cy=ingredient-proteins]').contains(
+			ingredient.proteins
+		);
+		cy.get('[data-cy=modal] [data-cy=ingredient-fat]').contains(ingredient.fat);
+		cy.get('[data-cy=modal] [data-cy=ingredient-carbohydrates]').contains(
+			ingredient.carbohydrates
+		);
+		cy.get('[data-cy=modal] [data-cy=ingredient-calories]').contains(
+			ingredient.calories
+		);
 		cy.get('[data-cy=modal-close]').click();
 		cy.get('[data-cy=modal]', { timeout: 2000 }).should('not.exist');
 	});

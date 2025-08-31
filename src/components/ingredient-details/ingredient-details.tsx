@@ -16,26 +16,40 @@ export const IngredientDetails = ({
 				src={ingredient.image_large}
 				alt={ingredient.name}
 			/>
-			<p className='text text_type_main-medium mb-8'>{ingredient.name}</p>
+			<p className='text text_type_main-medium mb-8' data-cy='ingredient-name'>
+				{ingredient.name}
+			</p>
 			<div className={`${styles.bju} mb-5`}>
 				<div className={`${styles.bju_item} mr-5 text_color_inactive`}>
 					<p className='text text_type_main-default mb-2'>Калории,ккал</p>
-					<p className='text text_type_digits-default'>{ingredient.calories}</p>
+					<p
+						className='text text_type_digits-default'
+						data-cy='ingredient-calories'>
+						{ingredient.calories}
+					</p>
 				</div>
 				<div
 					className={`${styles.bju_item} mr-5 text text_type_main-default text_color_inactive`}>
 					<p className='text text_type_main-default mb-2'>Белки, г</p>
-					<p className='text text_type_digits-default'>{ingredient.proteins}</p>
+					<p
+						className='text text_type_digits-default'
+						data-cy='ingredient-proteins'>
+						{ingredient.proteins}
+					</p>
 				</div>
 				<div
 					className={`${styles.bju_item} mr-5 text text_type_main-default text_color_inactive`}>
 					<p className='text text_type_main-default mb-2'>Жиры, г</p>
-					<p className='text text_type_digits-default'>{ingredient.fat}</p>
+					<p className='text text_type_digits-default' data-cy='ingredient-fat'>
+						{ingredient.fat}
+					</p>
 				</div>
 				<div
 					className={`${styles.bju_item} text text_type_main-default text_color_inactive`}>
 					<p className='text text_type_main-default mb-2'>Углеводы, г</p>
-					<p className='text text_type_digits-default'>
+					<p
+						className='text text_type_digits-default'
+						data-cy='ingredient-carbohydrates'>
 						{ingredient.carbohydrates}
 					</p>
 				</div>
