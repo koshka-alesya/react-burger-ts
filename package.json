@@ -19,7 +19,7 @@
 		"cypress:run": "cypress run",
 		"test": "vitest",
 		"predeploy": "npm run build",
-		"deploy": "gh-pages -d build",
+		"deploy": "gh-pages -d dist",
 		"test:ui": "vitest --ui"
 	},
 	"dependencies": {
