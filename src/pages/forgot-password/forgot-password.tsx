@@ -5,20 +5,19 @@ import {
 	EmailInput,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from '../auth/auth.module.css';
-import { useDispatch, useSelector } from 'react-redux';
 import { forgotPassword } from '@/services/user/action';
-import { AppDispatch } from '@/services/store';
 import { getIsLoading } from '@/services/user/user-slice';
 import Loader from '@/components/loader/loader';
 import { useForm } from '@/hooks/useForm';
+import { useAppDispatch, useAppSelector } from '@/hooks/hooks';
 
 export const ForgotPasswordPage = (): React.JSX.Element => {
 	const { values, handleChange } = useForm({
 		email: '',
 	});
 	const navigate = useNavigate();
-	const dispatch = useDispatch<AppDispatch>();
-	const loading = useSelector(getIsLoading);
+	const dispatch = useAppDispatch();
+	const loading = useAppSelector(getIsLoading);
 
 	const handleNavigateToLogin = () => {
 		navigate('/login');

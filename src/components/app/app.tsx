@@ -17,29 +17,41 @@ import { ResetPasswordPage } from '@/pages/reset-password/reset-password';
 import { ProfilePage } from '@/pages/profile/profile';
 import { ErrorPage } from '@/pages/error/error';
 import { ProfileInfo } from '../profile-info/profile-info';
-import { OrderHistory } from '../order-history/order-history';
-import { ProfileOrderDetails } from '../profile-order-details/profile-order-details';
+import OrderHistory from '../order-history/order-history';
 import { Modal } from '../modal/modal';
 import { IngredientDetailsPage } from '@/pages/ingredient-details/ingredient-details';
 import { IngredientDetailsModal } from '../ingredient-details/ingredient-details-modal';
-import { AppDispatch } from '@/services/store';
-import { useDispatch, useSelector } from 'react-redux';
 import { loadIngredients } from '@/services/ingredients/actions';
 import { getIngredientsState } from '@/services/ingredients/ingredients-slice';
 import Loader from '../loader/loader';
+import OrderFeed from '@/pages/order-feed/order-feed';
+import { OrderInfoPage } from '@/pages/order-info/order-info';
+import { OrderInfoModal } from '../order-info/order-info-modal';
+import { fetchUser } from '@/services/user/action';
+import { getIsAuthChecked, setIsAuthChecked } from '@/services/user/user-slice';
+import { useAppDispatch, useAppSelector } from '@/hooks/hooks';
 
 export const App = (): React.JSX.Element | null => {
 	const navigate = useNavigate();
 	const location = useLocation();
-	const dispatch = useDispatch<AppDispatch>();
+	const dispatch = useAppDispatch();
 	const navigationType = useNavigationType();
-	const { error, loading } = useSelector(getIngredientsState);
+	const { error, loading } = useAppSelector(getIngredientsState);
+	const isAuthChecked = useAppSelector(getIsAuthChecked);
 	const background = location.state && location.state.background;
 	const isModal = background && navigationType === 'PUSH';
 
 	useEffect(() => {
 		dispatch(loadIngredients());
-	}, []);
+	}, [dispatch]);
+
+	useEffect(() => {
+		if (!isAuthChecked) {
+			dispatch(fetchUser()).finally(() => {
+				dispatch(setIsAuthChecked(true));
+			});
+		}
+	}, [dispatch, isAuthChecked]);
 
 	const handleModalClose = () => {
 		navigate(-1);
@@ -59,6 +71,8 @@ export const App = (): React.JSX.Element | null => {
 			<main className={styles.main}>
 				<Routes location={isModal ? background : location}>
 					<Route path='/' element={<HomePage />} />
+					<Route path='/feed' element={<OrderFeed />} />
+					<Route path='/feed/:number' element={<OrderInfoPage />} />
 					<Route
 						path='/login'
 						element={
@@ -98,8 +112,12 @@ export const App = (): React.JSX.Element | null => {
 						element={<ProtectedRouteElement component={<ProfilePage />} />}>
 						<Route index element={<ProfileInfo />} />
 						<Route path='orders' element={<OrderHistory />} />
-						<Route path='orders/:number' element={<ProfileOrderDetails />} />
 					</Route>
+
+					<Route
+						path='/profile/orders/:number'
+						element={<ProtectedRouteElement component={<OrderInfoPage />} />}
+					/>
 					<Route path='/ingredients/:id' element={<IngredientDetailsPage />} />
 					<Route path='/error' element={<ErrorPage />} />
 					<Route path='*' element={<ErrorPage />} />
@@ -113,6 +131,26 @@ export const App = (): React.JSX.Element | null => {
 								<Modal header='Детали ингредиента' onClose={handleModalClose}>
 									<IngredientDetailsModal />
 								</Modal>
+							}
+						/>
+						<Route
+							path='/feed/:number'
+							element={
+								<Modal onClose={handleModalClose}>
+									<OrderInfoModal />
+								</Modal>
+							}
+						/>
+						<Route
+							path='/profile/orders/:number'
+							element={
+								<ProtectedRouteElement
+									component={
+										<Modal onClose={handleModalClose}>
+											<OrderInfoModal />
+										</Modal>
+									}
+								/>
 							}
 						/>
 					</Routes>

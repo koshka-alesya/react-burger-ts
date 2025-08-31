@@ -13,7 +13,7 @@ const initialState: TOrderState = {
 	error: null,
 };
 
-export const orderSlice = createSlice({
+export const createOrderSlice = createSlice({
 	name: 'order',
 	initialState,
 	reducers: {
@@ -49,5 +49,5 @@ export const orderSlice = createSlice({
 	},
 });
 
-export const { getOrderState } = orderSlice.selectors;
-export const { clearOrder } = orderSlice.actions;
+export const { getOrderState } = createOrderSlice.selectors;
+export const { clearOrder } = createOrderSlice.actions;

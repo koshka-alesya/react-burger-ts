@@ -1,14 +1,8 @@
-import React, { ReactElement, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { ReactElement } from 'react';
 import { Navigate, useLocation } from 'react-router-dom';
-import {
-	getIsAuthChecked,
-	setIsAuthChecked,
-	getUser,
-} from '../../services/user/user-slice';
+import { getIsAuthChecked, getUser } from '../../services/user/user-slice';
 import Loader from '../loader/loader';
-import { AppDispatch } from '@/services/store';
-import { fetchUser } from '@/services/user/action';
+import { useAppSelector } from '@/hooks/hooks';
 
 interface ProtectedRouteProps {
 	onlyUnAuth?: boolean;
@@ -21,21 +15,12 @@ export const ProtectedRouteElement: React.FC<ProtectedRouteProps> = ({
 	component,
 	requireForgotFlow = false,
 }) => {
-	const isAuthChecked = useSelector(getIsAuthChecked);
-	const user = useSelector(getUser);
+	const isAuthChecked = useAppSelector(getIsAuthChecked);
+	const user = useAppSelector(getUser);
 	const location = useLocation();
-	const dispatch = useDispatch<AppDispatch>();
 	const isUser = Boolean(user);
 
 	const forgotVisited = sessionStorage.getItem('forgotVisited') === 'true';
-
-	useEffect(() => {
-		if (!isAuthChecked) {
-			dispatch(fetchUser()).finally(() => {
-				dispatch(setIsAuthChecked(true));
-			});
-		}
-	}, [dispatch, isAuthChecked]);
 
 	if (!isAuthChecked) {
 		return <Loader />;

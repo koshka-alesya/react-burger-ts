@@ -1,5 +1,4 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { useSelector } from 'react-redux';
 import styles from './burger-ingredients.module.css';
 import { TIngredient } from '@utils/types.ts';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -9,12 +8,13 @@ import {
 	getMains,
 	getSauces,
 } from '@/services/ingredients/ingredients-slice';
+import { useAppSelector } from '@/hooks/hooks';
 
 export const BurgerIngredients = (): React.JSX.Element => {
 	const [active, setActive] = useState<'bun' | 'sauce' | 'main'>('bun');
-	const buns: TIngredient[] = useSelector(getBuns);
-	const mains: TIngredient[] = useSelector(getMains);
-	const sauces: TIngredient[] = useSelector(getSauces);
+	const buns: TIngredient[] = useAppSelector(getBuns);
+	const mains: TIngredient[] = useAppSelector(getMains);
+	const sauces: TIngredient[] = useAppSelector(getSauces);
 
 	const containerRef = useRef<HTMLUListElement | null>(null);
 	const bunRef = useRef<HTMLLIElement | null>(null);

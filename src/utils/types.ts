@@ -81,3 +81,47 @@ export interface IUserState {
 	error: string | null;
 	message?: string | null;
 }
+
+export type TOrder = {
+	_id: string;
+	number: string;
+	status: 'created' | 'pending' | 'done';
+	createdAt: string;
+	updatedAt: string;
+	ingredients: string[];
+	name: string;
+};
+
+export type TOrdersResponse = {
+	success: boolean;
+	orders: TOrder[];
+	total: number;
+	totalToday: number;
+};
+
+export type TOrderProcessed = TOrder & {
+	totalPrice: number;
+	ingredientImages: string[];
+	ingredientsData: Array<TIngredient & { count: number }>;
+};
+
+export enum OrderStatus {
+	done = 'Выполнен',
+	pending = 'Готовится',
+	created = 'Создан',
+	cancelled = 'Отменен',
+}
+
+export enum ConnectionStatus {
+	CONNECTING = 'CONNECTING...',
+	ONLINE = 'ONLINE',
+	OFFLINE = 'OFFLINE',
+}
+
+export type TOrdersStore = {
+	status: ConnectionStatus;
+	connectionError: string;
+	orders: TOrder[];
+	total: number;
+	totalToday: number;
+};

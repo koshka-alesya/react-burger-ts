@@ -7,10 +7,9 @@ import {
 	PasswordInput,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from '../auth/auth.module.css';
-import { useDispatch } from 'react-redux';
-import { AppDispatch } from '@/services/store';
 import { register } from '@/services/user/action';
 import { useForm } from '@/hooks/useForm';
+import { useAppDispatch } from '@/hooks/hooks';
 
 export const RegistrationPage = (): React.JSX.Element => {
 	const { values, handleChange } = useForm({
@@ -19,7 +18,7 @@ export const RegistrationPage = (): React.JSX.Element => {
 		password: '',
 	});
 	const navigate = useNavigate();
-	const dispatch = useDispatch<AppDispatch>();
+	const dispatch = useAppDispatch();
 
 	const handleNavigateToLogin = () => {
 		navigate('/login');

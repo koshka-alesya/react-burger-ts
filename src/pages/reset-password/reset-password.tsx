@@ -6,12 +6,11 @@ import {
 	PasswordInput,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from '../auth/auth.module.css';
-import { useDispatch, useSelector } from 'react-redux';
 import { getIsLoading } from '@/services/user/user-slice';
-import { AppDispatch } from '@/services/store';
 import { resetPassword } from '@/services/user/action';
 import Loader from '@/components/loader/loader';
 import { useForm } from '@/hooks/useForm';
+import { useAppDispatch, useAppSelector } from '@/hooks/hooks';
 
 export const ResetPasswordPage = (): React.JSX.Element => {
 	const { values, handleChange } = useForm({
@@ -19,8 +18,8 @@ export const ResetPasswordPage = (): React.JSX.Element => {
 		password: '',
 	});
 	const navigate = useNavigate();
-	const dispatch = useDispatch<AppDispatch>();
-	const loading = useSelector(getIsLoading);
+	const dispatch = useAppDispatch();
+	const loading = useAppSelector(getIsLoading);
 
 	const handleNavigateToLogin = () => {
 		navigate('/login');

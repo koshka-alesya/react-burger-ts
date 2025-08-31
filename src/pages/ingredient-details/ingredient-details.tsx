@@ -1,5 +1,4 @@
 import { useParams } from 'react-router-dom';
-import { useSelector } from 'react-redux';
 import {
 	getIngredientById,
 	getIngredientsState,
@@ -7,11 +6,12 @@ import {
 import { IngredientDetails } from '@/components/ingredient-details/ingredient-details';
 import styles from './ingredient-details.module.css';
 import Loader from '@/components/loader/loader';
+import { useAppSelector } from '@/hooks/hooks';
 
 export const IngredientDetailsPage = () => {
 	const { id } = useParams<{ id: string }>();
-	const ingredient = useSelector(getIngredientById(id!));
-	const { error, loading, ingredients } = useSelector(getIngredientsState);
+	const ingredient = useAppSelector(getIngredientById(id!));
+	const { error, loading, ingredients } = useAppSelector(getIngredientsState);
 
 	if (loading || !ingredients.length) {
 		return <Loader />;

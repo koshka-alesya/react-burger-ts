@@ -1,12 +1,11 @@
 import { useCallback, useMemo } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { updateUser } from '@/services/user/action';
-import { AppDispatch } from '@/services/store';
 import { getUser } from '@/services/user/user-slice';
+import { useAppDispatch, useAppSelector } from './hooks';
 
 export const useEditUser = (email: string, name: string, password: string) => {
-	const user = useSelector(getUser);
-	const dispatch = useDispatch<AppDispatch>();
+	const user = useAppSelector(getUser);
+	const dispatch = useAppDispatch();
 
 	const isChanged = useMemo(() => {
 		if (!user) return false;
