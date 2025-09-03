@@ -1,9 +1,6 @@
-import { GIT_BASE_URL, DEV_SERVER_URL } from '../../src/utils/route';
 import SELECTORS from '../support/selectors';
 
 /// <reference types="cypress" />
-
-const url = `${DEV_SERVER_URL}${GIT_BASE_URL}/`;
 
 const user = {
 	email: 'test@yopmail.com',
@@ -48,7 +45,7 @@ describe('constructor spec', () => {
 			JSON.stringify('test-accessToken')
 		);
 
-		cy.visit(url);
+		cy.visit('/');
 		cy.wait('@getIngredients');
 
 		cy.get(SELECTORS.ingredientLink).as('ingredientLink');
