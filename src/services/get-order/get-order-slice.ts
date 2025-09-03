@@ -10,7 +10,7 @@ export type TOrderState = {
 	error: string | null;
 };
 
-const initialState: TOrderState = {
+export const initialState: TOrderState = {
 	order: null,
 	loading: false,
 	error: null,

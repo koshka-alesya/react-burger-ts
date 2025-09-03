@@ -1,14 +1,8 @@
 import { TOrder } from '@/utils/types';
 import { fetchOrder } from './actions';
-import { TOrderState, clearOrder, getOrderSlice } from './get-order-slice';
+import { clearOrder, getOrderSlice, initialState } from './get-order-slice';
 
 const reducer = getOrderSlice.reducer;
-
-const initialState: TOrderState = {
-	order: null,
-	loading: false,
-	error: null,
-};
 
 const order: TOrder = {
 	_id: '1',

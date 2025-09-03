@@ -1,13 +1,7 @@
 import { loadIngredients } from './actions';
-import { TIngredientsState, ingredientsSlice } from './ingredients-slice';
+import { ingredientsSlice, initialState } from './ingredients-slice';
 
 const reducer = ingredientsSlice.reducer;
-
-const initialState: TIngredientsState = {
-	ingredients: [],
-	loading: false,
-	error: null,
-};
 
 const ingredients = {
 	success: true,

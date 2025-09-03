@@ -1,16 +1,12 @@
 import { TIngredient } from '@/utils/types';
 import {
-	TSelectedIngredientState,
 	clearSelectedIngredient,
+	initialState,
 	selectedIngredientSlice,
 	setSelectedIngredient,
 } from './selected-ingredient-slice';
 
 const reducer = selectedIngredientSlice.reducer;
-
-const initialState: TSelectedIngredientState = {
-	ingredient: null,
-};
 
 const ingredient: TIngredient = {
 	_id: '643d69a5c3f7b9001cfa093c',

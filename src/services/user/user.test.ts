@@ -1,4 +1,9 @@
-import { userSlice, setUser, setIsAuthChecked } from './user-slice';
+import {
+	userSlice,
+	setUser,
+	setIsAuthChecked,
+	initialState,
+} from './user-slice';
 import {
 	login,
 	logout,
@@ -11,14 +16,6 @@ import {
 import { IUserState, TUser } from '@/utils/types';
 
 const reducer = userSlice.reducer;
-
-const initialState: IUserState = {
-	user: null,
-	isAuthChecked: false,
-	loading: false,
-	error: null,
-	message: null,
-};
 
 const user: TUser = { name: 'ivanov', email: 'ivanov@yandex.ru' };
 

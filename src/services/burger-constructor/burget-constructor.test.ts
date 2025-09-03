@@ -2,6 +2,7 @@ import {
 	addBun,
 	addIngredient,
 	burgerConstructorSlice,
+	initialState,
 	moveIngredient,
 	removeIngredient,
 	resetBurgerConstructor,
@@ -9,12 +10,6 @@ import {
 import { TIngredient } from '@/utils/types';
 
 const reducer = burgerConstructorSlice.reducer;
-
-const initialState = {
-	bun: null,
-	ingredients: [],
-	ingredientCounts: {},
-};
 
 const bun: TIngredient = {
 	_id: 'bun1',

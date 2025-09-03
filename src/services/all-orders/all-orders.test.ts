@@ -1,20 +1,13 @@
-import { ConnectionStatus, TOrdersResponse, TOrdersStore } from '@/utils/types';
+import { ConnectionStatus, TOrdersResponse } from '@/utils/types';
 import {
 	allOrdersSlice,
 	connectionError,
+	initialState,
 	setConnectionStatus,
 	updateData,
 } from './all-orders-slice';
 
 const reducer = allOrdersSlice.reducer;
-
-const initialState: TOrdersStore = {
-	status: ConnectionStatus.OFFLINE,
-	connectionError: '',
-	orders: [],
-	total: 0,
-	totalToday: 0,
-};
 
 const ordersResponse: TOrdersResponse = {
 	success: true,

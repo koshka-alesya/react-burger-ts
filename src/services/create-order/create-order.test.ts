@@ -1,17 +1,11 @@
 import { TCreateOrderResponse, createOrder } from './actions';
 import {
-	TOrderState,
 	clearOrder,
 	createOrderSlice,
+	initialState,
 } from './create-order-slice';
 
 const reducer = createOrderSlice.reducer;
-
-const initialState: TOrderState = {
-	order: null,
-	loading: false,
-	error: null,
-};
 
 const order: TCreateOrderResponse = {
 	name: 'test',

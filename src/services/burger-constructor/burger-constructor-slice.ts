@@ -7,7 +7,7 @@ type TBurgerContructorState = {
 	ingredientCounts: Record<string, number>;
 };
 
-const initialState: TBurgerContructorState = {
+export const initialState: TBurgerContructorState = {
 	bun: null,
 	ingredients: [],
 	ingredientCounts: {},
