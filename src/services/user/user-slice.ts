@@ -11,7 +11,7 @@ import {
 import { TUser, IUserState } from '@/utils/types';
 import { handlePending, handleRejected } from '@/utils/store/reducer-utils';
 
-const initialState: IUserState = {
+export const initialState: IUserState = {
 	user: null,
 	isAuthChecked: false,
 	loading: false,

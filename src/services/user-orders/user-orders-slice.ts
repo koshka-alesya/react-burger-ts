@@ -10,7 +10,7 @@ import { createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { getIngredients } from '../ingredients/ingredients-slice';
 import { processOrders } from '@/utils/orders';
 
-const initialState: TOrdersStore = {
+export const initialState: TOrdersStore = {
 	status: ConnectionStatus.OFFLINE,
 	connectionError: '',
 	orders: [],

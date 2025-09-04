@@ -64,12 +64,17 @@ export const BurgerConstructor = (): React.JSX.Element => {
 				<BurgerComponents />
 			</div>
 			<div className={styles.info}>
-				<p className='text text_type_digits-medium mr-2'>{totalPrice}</p>
+				<p
+					className='text text_type_digits-medium mr-2'
+					data-cy='burger-constructor-price'>
+					{totalPrice}
+				</p>
 				<CurrencyIcon type='primary' className={styles.icon} />
 				<Button
 					htmlType='button'
 					type='primary'
 					size='large'
+					data-cy='burger-constructor-create-order'
 					onClick={handleCreateOrder}>
 					Оформить заказ
 				</Button>

@@ -27,6 +27,7 @@ export const IngredientItem = ({
 
 	return (
 		<Link
+			data-cy='ingredient-link'
 			key={ingredient._id}
 			to={`/ingredients/${ingredient._id}`}
 			state={{ background: location }}

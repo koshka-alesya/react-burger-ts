@@ -45,7 +45,7 @@ export const BurgerComponents = (): React.JSX.Element | null => {
 
 	return (
 		<DropTarget onDropHandler={handleDrop} accept='ingredient'>
-			<ul className={styles.burger_components}>
+			<ul className={styles.burger_components} data-cy='burger-component'>
 				{bun && (
 					<li className={styles.item}>
 						<div className={styles.icon}></div>
